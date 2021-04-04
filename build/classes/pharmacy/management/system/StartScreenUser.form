@@ -733,9 +733,9 @@
                   <Component id="jLabel17" alignment="0" pref="985" max="32767" attributes="0"/>
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="pnlManuInfo" alignment="0" min="-2" max="-2" attributes="0"/>
-                          <Component id="pnlButtonManu" alignment="0" min="-2" pref="331" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="pnlButtonManu" pref="331" max="32767" attributes="0"/>
+                          <Component id="pnlManuInfo" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="jScrollPane3" pref="612" max="32767" attributes="0"/>
@@ -799,7 +799,7 @@
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="txtManuPhone" alignment="0" pref="210" max="32767" attributes="0"/>
+                              <Component id="txtManuPhone" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtManuExp" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtManuAdd" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtManuName" alignment="0" max="32767" attributes="0"/>
@@ -970,19 +970,18 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="jLabel9" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jLabel9" max="32767" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace pref="17" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="5" max="32767" attributes="0"/>
                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="pnlReportInfo" max="32767" attributes="0"/>
-                                  <Component id="pnlButtonReport" pref="0" max="32767" attributes="0"/>
+                                  <Component id="pnlButtonReport" alignment="0" pref="309" max="32767" attributes="0"/>
+                                  <Component id="jPanel1" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="pnlReportInfo" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jScrollPane5" pref="579" max="32767" attributes="0"/>
+                              <Component id="jScrollPane5" min="-2" pref="629" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -1000,6 +999,8 @@
                               <Component id="pnlReportInfo" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="pnlButtonReport" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="jPanel1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <Component id="jScrollPane5" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -1045,13 +1046,13 @@
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                              <Component id="txtCuID" alignment="0" pref="200" max="32767" attributes="0"/>
-                              <Component id="txtReportID" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtDateReport" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtRepoTotal" alignment="0" pref="171" max="32767" attributes="0"/>
+                              <Component id="txtCuID" alignment="0" max="32767" attributes="0"/>
                               <Component id="txtEmID" alignment="0" max="32767" attributes="0"/>
-                              <Component id="txtRepoTotal" max="32767" attributes="0"/>
+                              <Component id="txtDateReport" alignment="0" max="32767" attributes="0"/>
+                              <Component id="txtReportID" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="46" max="32767" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -1159,19 +1160,6 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnDeleteRepoActionPerformed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JButton" name="btnReportDetail">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Details"/>
-                  </Properties>
-                </Component>
-                <Component class="javax.swing.JButton" name="btnClearRepo">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Clear"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearRepoActionPerformed"/>
-                  </Events>
-                </Component>
               </SubComponents>
             </Container>
             <Container class="javax.swing.JScrollPane" name="jScrollPane5">
@@ -1194,6 +1182,30 @@
                   </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbReportMouseClicked"/>
+                  </Events>
+                </Component>
+              </SubComponents>
+            </Container>
+            <Container class="javax.swing.JPanel" name="jPanel1">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+              </Properties>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
+              <SubComponents>
+                <Component class="javax.swing.JButton" name="btnReportDetail">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Details"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JButton" name="btnClearRepo">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" value="Clear"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnClearRepoActionPerformed"/>
                   </Events>
                 </Component>
               </SubComponents>

@@ -183,6 +183,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         btnAddRepo = new javax.swing.JButton();
         btnUpdateRepo = new javax.swing.JButton();
         btnDeleteRepo = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
         btnReportDetail = new javax.swing.JButton();
         btnClearRepo = new javax.swing.JButton();
         mbPharma = new javax.swing.JMenuBar();
@@ -1101,13 +1102,15 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonReport.add(btnDeleteRepo);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
         btnReportDetail.setText("Details");
         btnReportDetail.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnReportDetailActionPerformed(evt);
             }
         });
-        pnlButtonReport.add(btnReportDetail);
+        jPanel1.add(btnReportDetail);
 
         btnClearRepo.setText("Clear");
         btnClearRepo.addActionListener(new java.awt.event.ActionListener() {
@@ -1115,7 +1118,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
                 btnClearRepoActionPerformed(evt);
             }
         });
-        pnlButtonReport.add(btnClearRepo);
+        jPanel1.add(btnClearRepo);
 
         javax.swing.GroupLayout pnlReportLayout = new javax.swing.GroupLayout(pnlReport);
         pnlReport.setLayout(pnlReportLayout);
@@ -1127,10 +1130,11 @@ public class StartScreenAdmin extends javax.swing.JFrame {
                     .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlReportLayout.createSequentialGroup()
                         .addGroup(pnlReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(pnlButtonReport, javax.swing.GroupLayout.DEFAULT_SIZE, 302, Short.MAX_VALUE)
                             .addComponent(pnlReportInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pnlButtonReport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 582, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 641, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         pnlReportLayout.setVerticalGroup(
@@ -1144,7 +1148,9 @@ public class StartScreenAdmin extends javax.swing.JFrame {
                     .addGroup(pnlReportLayout.createSequentialGroup()
                         .addComponent(pnlReportInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(pnlButtonReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(pnlButtonReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 17, Short.MAX_VALUE))
         );
 
@@ -2087,6 +2093,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

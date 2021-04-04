@@ -147,10 +147,11 @@ public class StartScreenUser extends javax.swing.JFrame {
         btnAddRepo = new javax.swing.JButton();
         btnUpdateRepo = new javax.swing.JButton();
         btnDeleteRepo = new javax.swing.JButton();
-        btnReportDetail = new javax.swing.JButton();
-        btnClearRepo = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         tbReport = new javax.swing.JTable();
+        jPanel1 = new javax.swing.JPanel();
+        btnReportDetail = new javax.swing.JButton();
+        btnClearRepo = new javax.swing.JButton();
         mbPharma = new javax.swing.JMenuBar();
         mSystem = new javax.swing.JMenu();
         btnSignOut = new javax.swing.JMenuItem();
@@ -602,7 +603,7 @@ public class StartScreenUser extends javax.swing.JFrame {
                     .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlManuInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtManuPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                    .addComponent(txtManuPhone)
                     .addComponent(txtManuExp)
                     .addComponent(txtManuAdd)
                     .addComponent(txtManuName)
@@ -694,9 +695,9 @@ public class StartScreenUser extends javax.swing.JFrame {
             .addComponent(jLabel17, javax.swing.GroupLayout.DEFAULT_SIZE, 985, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlManufactorLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlManufactorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlManuInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlButtonManu, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(pnlManufactorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(pnlButtonManu, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+                    .addComponent(pnlManuInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)
                 .addContainerGap())
@@ -752,12 +753,12 @@ public class StartScreenUser extends javax.swing.JFrame {
                     .addComponent(jLabel35, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtCuID, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                    .addComponent(txtReportID, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtDateReport, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtRepoTotal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
+                    .addComponent(txtCuID, javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtEmID, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtRepoTotal))
-                .addContainerGap(46, Short.MAX_VALUE))
+                    .addComponent(txtDateReport, javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtReportID))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlReportInfoLayout.setVerticalGroup(
             pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -811,17 +812,6 @@ public class StartScreenUser extends javax.swing.JFrame {
         });
         pnlButtonReport.add(btnDeleteRepo);
 
-        btnReportDetail.setText("Details");
-        pnlButtonReport.add(btnReportDetail);
-
-        btnClearRepo.setText("Clear");
-        btnClearRepo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClearRepoActionPerformed(evt);
-            }
-        });
-        pnlButtonReport.add(btnClearRepo);
-
         tbReport.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -840,22 +830,35 @@ public class StartScreenUser extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(tbReport);
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
+        btnReportDetail.setText("Details");
+        jPanel1.add(btnReportDetail);
+
+        btnClearRepo.setText("Clear");
+        btnClearRepo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnClearRepoActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnClearRepo);
+
         javax.swing.GroupLayout pnlReportLayout = new javax.swing.GroupLayout(pnlReport);
         pnlReport.setLayout(pnlReportLayout);
         pnlReportLayout.setHorizontalGroup(
             pnlReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlReportLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(pnlReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlReportLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlReportLayout.createSequentialGroup()
-                        .addContainerGap(17, Short.MAX_VALUE)
+                        .addGap(0, 5, Short.MAX_VALUE)
                         .addGroup(pnlReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pnlReportInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pnlButtonReport, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                            .addComponent(pnlButtonReport, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnlReportInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         pnlReportLayout.setVerticalGroup(
@@ -868,7 +871,9 @@ public class StartScreenUser extends javax.swing.JFrame {
                     .addGroup(pnlReportLayout.createSequentialGroup()
                         .addComponent(pnlReportInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(pnlButtonReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(pnlButtonReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(17, Short.MAX_VALUE))
         );
@@ -1573,6 +1578,7 @@ public class StartScreenUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
