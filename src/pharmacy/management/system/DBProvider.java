@@ -86,4 +86,13 @@ public class DBProvider {
             Logger.getLogger(DBProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+//    public static boolean checkHour(String a, String b, String c){
+//        int A = Integer.valueOf(a);
+//        int B = Integer.valueOf(b);
+//        int C = Integer.valueOf(c);
+//        if(A<0 && A>24) return false;
+//        else if(B<0 && B>60) return false;
+//        else if( C<0 && C>60) return false;
+//        else return true;
+//    }
 }

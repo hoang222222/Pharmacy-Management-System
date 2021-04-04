@@ -788,6 +788,11 @@ public class StartScreenUser extends javax.swing.JFrame {
         pnlButtonReport.setBackground(new java.awt.Color(255, 255, 255));
 
         btnAddRepo.setText("Add");
+        btnAddRepo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAddRepoActionPerformed(evt);
+            }
+        });
         pnlButtonReport.add(btnAddRepo);
 
         btnUpdateRepo.setText("Update");
@@ -1408,16 +1413,16 @@ public class StartScreenUser extends javax.swing.JFrame {
         int Myindex = tbReport.getSelectedRow();
         txtReportID.setText(model.getValueAt(Myindex, 0).toString());
         String dateR = model.getValueAt(Myindex, 1).toString();
-        String[] parts = dateR.split(" ");
-        String parts1 = parts[0];
-        String parts2 = parts[1];
+//        String[] parts = dateR.split(" ");
+//        String parts1 = parts[0];
+//        String parts2 = parts[1];
 //        String[] part = parts2.split(":");
 //        String part1 = part[0];
 //        String part2 = part[1];
 //        String part3 = part[2];
         //            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(parts1);
 //            dateReport.setDate(date);
-        txtDateReport.setText(parts1);
+        txtDateReport.setText(dateR);
 //        txtHH.setText(part1);
 //        txtMM.setText(part2);
 //        txtSS.setText(part3);
@@ -1445,6 +1450,40 @@ public class StartScreenUser extends javax.swing.JFrame {
         txtRepoTotal.setText("");
         //txtHH.setText("");
     }//GEN-LAST:event_btnClearRepoActionPerformed
+
+    private void btnAddRepoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRepoActionPerformed
+         // TODO add your handling code here:
+         if (txtReportID.getText().equals("") || txtEmID.getText().equals("") || txtCuID.getText().equals("") || txtRepoTotal.getText().equals("")) {
+            JOptionPane.showMessageDialog(this, "Something is empty!");
+        } else {
+            try {
+//                dateR = dateReport.getDate();
+//                report_date = new java.sql.Date(dateR.getTime());
+                getConnect();
+                String sql_add = "insert into report values (?,?,?,?,?)";
+                String sql_check = "select * from report where report_id=?";
+                excuteAdd(sql_add);
+                excuteCheck(sql_check);
+                check.setInt(1, Integer.valueOf(txtReportID.getText()));
+                rs = check.executeQuery();
+                if (rs.next()) {
+                    JOptionPane.showMessageDialog(this, "Report have already!");
+                } else {
+                    add.setInt(1, Integer.valueOf(txtReportID.getText()));
+                    add.setString(2, timeStamp);
+                    add.setInt(3, Integer.valueOf(txtEmID.getText()));
+                    add.setInt(4, Integer.valueOf(txtCuID.getText()));
+                    add.setInt(5, Integer.valueOf(txtRepoTotal.getText()));                  
+                    int row = add.executeUpdate();
+                    JOptionPane.showMessageDialog(this, "Add successful!");
+                    SelectRepo();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(StartScreenAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        closeConnect();
+    }//GEN-LAST:event_btnAddRepoActionPerformed
 
     /**
      * @param args the command line arguments
