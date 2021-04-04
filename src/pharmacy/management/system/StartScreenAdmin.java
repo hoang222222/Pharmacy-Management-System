@@ -5,6 +5,10 @@
  */
 package pharmacy.management.system;
 
+import java.lang.System;
+import java.io.InputStream;
+import static java.lang.Math.E;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -17,9 +21,20 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
+
 import static pharmacy.management.system.DBProvider.add;
 import static pharmacy.management.system.DBProvider.check;
 import static pharmacy.management.system.DBProvider.closeConnect;
+import static pharmacy.management.system.DBProvider.conn;
 import static pharmacy.management.system.DBProvider.excuteAdd;
 import static pharmacy.management.system.DBProvider.excuteCheck;
 import static pharmacy.management.system.DBProvider.excuteGet;
@@ -27,9 +42,12 @@ import static pharmacy.management.system.DBProvider.excuteSQL;
 import static pharmacy.management.system.DBProvider.excuteUpdate_Delete;
 import static pharmacy.management.system.DBProvider.get;
 import static pharmacy.management.system.DBProvider.getConnect;
+import static pharmacy.management.system.DBProvider.password_db;
 import static pharmacy.management.system.DBProvider.rs;
 import static pharmacy.management.system.DBProvider.rs1;
 import static pharmacy.management.system.DBProvider.rs2;
+import static pharmacy.management.system.DBProvider.url;
+import static pharmacy.management.system.DBProvider.username_db;
 
 /**
  *
@@ -64,7 +82,6 @@ public class StartScreenAdmin extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        textEditor1 = new com.sun.activation.viewers.TextEditor();
         tbAdmin = new javax.swing.JTabbedPane();
         pnlMedicine = new javax.swing.JPanel();
         lbMedicine = new javax.swing.JLabel();
@@ -1931,7 +1948,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
                     add.setString(2, timeStamp);
                     add.setInt(3, Integer.valueOf(txtEmID.getText()));
                     add.setInt(4, Integer.valueOf(txtCuID.getText()));
-                    add.setInt(5, Integer.valueOf(txtRepoTotal.getText()));                  
+                    add.setInt(5, Integer.valueOf(txtRepoTotal.getText()));
                     int row = add.executeUpdate();
                     JOptionPane.showMessageDialog(this, "Add successful!");
                     SelectRepo();
@@ -1944,22 +1961,20 @@ public class StartScreenAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddRepoActionPerformed
 
     private void btnReportDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportDetailActionPerformed
-        // TODO add your handling code here:
-//        try {
-//            // TODO add your handling code here:
-//            String mess = "";
-//            getConnect();
-//            String sql = "select report_date from report where report_id =?";
-//            excuteCheck(sql);
-//            check.setString(1, txtReportID.getText());
-//            rs = check.executeQuery();
-//            if (rs.next()) {
-//                mess = rs.getString("report_date");
-//                JOptionPane.showMessageDialog(this, mess);
-//            }
-//        } catch (SQLException ex) {
-//            Logger.getLogger(StartScreenAdmin.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        try {
+            conn= DriverManager.getConnection(url, username_db, password_db);
+            JasperDesign jde = JRXmlLoader.load("E:\\PharmacyManagementSystem\\src\\reports\\reportpharma.jrxml");
+            String sql = "select a.report_id, a.report_date, c.cus_name , e.med_name, e.med_unitprice, b.amout, a.total, d.nv_name from pharmacydb.report a, pharmacydb.reportdetail  b, pharmacydb.customer c, pharmacydb.nv d, pharmacydb.medicine e where a.cus_id=c.cus_id and a.nv_id=d.nv_id and b.med_id=e.med_id and a.report_id=b.report_id";
+            JRDesignQuery query = new JRDesignQuery();
+            query.setText(sql);
+            jde.setQuery(query);
+            JasperReport jr = JasperCompileManager.compileReport(jde);
+            JasperPrint jp = JasperFillManager.fillReport(jr, null, conn);
+            JasperViewer.viewReport(jp);
+        } catch (SQLException | JRException ex) {
+            Logger.getLogger(StartScreenAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnReportDetailActionPerformed
 
     private void txtHHKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHHKeyTyped
@@ -2124,7 +2139,6 @@ public class StartScreenAdmin extends javax.swing.JFrame {
     private javax.swing.JTable tbManu;
     private javax.swing.JTable tbMedi;
     private javax.swing.JTable tbReport;
-    private com.sun.activation.viewers.TextEditor textEditor1;
     private javax.swing.JTextField txtCuID;
     private javax.swing.JTextField txtCusAdd;
     private javax.swing.JTextField txtCusID;
