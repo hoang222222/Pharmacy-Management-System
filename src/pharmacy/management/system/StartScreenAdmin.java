@@ -1888,76 +1888,82 @@ public class StartScreenAdmin extends javax.swing.JFrame {
 
     private void btnUpdateRepoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateRepoActionPerformed
         // TODO add your handling code here:
-        if (txtReportID.getText().equals("") || txtEmID.getText().equals("") || txtCuID.getText().equals("") || txtRepoTotal.getText().equals("") || txtHH.getText().equals("") || txtMM.getText().equals("") || txtSS.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Something has been empty!");
-        } else {
-            //String rp_date="";
-            String hh = txtHH.getText();
-            String mm = txtMM.getText();
-            String ss = txtSS.getText();
-            int a = Integer.valueOf(hh);
-            int b = Integer.valueOf(mm);
-            int c = Integer.valueOf(ss);
-            //JOptionPane.showMessageDialog(this, rp_date);
-            //report_date = new java.sql.Date(dateR.getTime());
-            if ((a < 0) || (a >= 24) || (b < 0) || (b >= 60) || (c < 0) || (c >= 60)) {
-                JOptionPane.showMessageDialog(this, "Time is wrong!");
-            } else {
-                getConnect();
-                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                dateR = dateReport.getDate();
-                String date = df.format(dateR);
-                if (a > 0 && a < 9) {
-                    hh = "0" + hh;
-                    String rp_date = date + " " + hh + ":" + mm + ":" + ss;
-                    String sql = "update report set report_date='" + rp_date + "', nv_id=" + txtEmID.getText() + ", cus_id=" + txtCuID.getText() + ", total=" + txtRepoTotal.getText() + " where report_id=" + txtReportID.getText() + " ";
-                    excuteUpdate_Delete(sql);
-                    JOptionPane.showMessageDialog(this, "Updated Success");
-                    SelectRepo();
-                } else if (a >= 9 && a <= 23) {
-                    String rp_date = date + " " + hh + ":" + mm + ":" + ss;
-                    String sql = "update report set report_date='" + rp_date + "', nv_id=" + txtEmID.getText() + ", cus_id=" + txtCuID.getText() + ", total=" + txtRepoTotal.getText() + " where report_id=" + txtReportID.getText() + " ";
-                    excuteUpdate_Delete(sql);
-                    JOptionPane.showMessageDialog(this, "Updated Success");
-                    SelectRepo();
-                }
-            }
-        }
-        closeConnect();
+        UpdateReport ur = new UpdateReport();
+        ur.setVisible(true);
+        this.dispose();
+//        if (txtReportID.getText().equals("") || txtEmID.getText().equals("") || txtCuID.getText().equals("") || txtRepoTotal.getText().equals("") || txtHH.getText().equals("") || txtMM.getText().equals("") || txtSS.getText().equals("")) {
+//            JOptionPane.showMessageDialog(this, "Something has been empty!");
+//        } else {
+//            //String rp_date="";
+//            String hh = txtHH.getText();
+//            String mm = txtMM.getText();
+//            String ss = txtSS.getText();
+//            int a = Integer.valueOf(hh);
+//            int b = Integer.valueOf(mm);
+//            int c = Integer.valueOf(ss);
+//            //JOptionPane.showMessageDialog(this, rp_date);
+//            //report_date = new java.sql.Date(dateR.getTime());
+//            if ((a < 0) || (a >= 24) || (b < 0) || (b >= 60) || (c < 0) || (c >= 60)) {
+//                JOptionPane.showMessageDialog(this, "Time is wrong!");
+//            } else {
+//                getConnect();
+//                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+//                dateR = dateReport.getDate();
+//                String date = df.format(dateR);
+//                if (a > 0 && a < 9) {
+//                    hh = "0" + hh;
+//                    String rp_date = date + " " + hh + ":" + mm + ":" + ss;
+//                    String sql = "update report set report_date='" + rp_date + "', nv_id=" + txtEmID.getText() + ", cus_id=" + txtCuID.getText() + ", total=" + txtRepoTotal.getText() + " where report_id=" + txtReportID.getText() + " ";
+//                    excuteUpdate_Delete(sql);
+//                    JOptionPane.showMessageDialog(this, "Updated Success");
+//                    SelectRepo();
+//                } else if (a >= 9 && a <= 23) {
+//                    String rp_date = date + " " + hh + ":" + mm + ":" + ss;
+//                    String sql = "update report set report_date='" + rp_date + "', nv_id=" + txtEmID.getText() + ", cus_id=" + txtCuID.getText() + ", total=" + txtRepoTotal.getText() + " where report_id=" + txtReportID.getText() + " ";
+//                    excuteUpdate_Delete(sql);
+//                    JOptionPane.showMessageDialog(this, "Updated Success");
+//                    SelectRepo();
+//                }
+//            }
+//        }
+//        closeConnect();
     }//GEN-LAST:event_btnUpdateRepoActionPerformed
 
     private void btnAddRepoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRepoActionPerformed
         // TODO add your handling code here:
-        if (txtReportID.getText().equals("") || txtEmID.getText().equals("") || txtCuID.getText().equals("") || txtRepoTotal.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Something is empty!");
-        } else {
-            try {
-//                dateR = dateReport.getDate();
-//                report_date = new java.sql.Date(dateR.getTime());
-                getConnect();
-                String sql_add = "insert into report values (?,?,?,?,?)";
-                String sql_check = "select * from report where report_id=?";
-                excuteAdd(sql_add);
-                excuteCheck(sql_check);
-                check.setInt(1, Integer.valueOf(txtReportID.getText()));
-                rs = check.executeQuery();
-                if (rs.next()) {
-                    JOptionPane.showMessageDialog(this, "Report have already!");
-                } else {
-                    add.setInt(1, Integer.valueOf(txtReportID.getText()));
-                    add.setString(2, timeStamp);
-                    add.setInt(3, Integer.valueOf(txtEmID.getText()));
-                    add.setInt(4, Integer.valueOf(txtCuID.getText()));
-                    add.setInt(5, Integer.valueOf(txtRepoTotal.getText()));
-                    int row = add.executeUpdate();
-                    JOptionPane.showMessageDialog(this, "Add successful!");
-                    SelectRepo();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(StartScreenAdmin.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        closeConnect();
+        AddReport ar = new AddReport();
+        ar.setVisible(true);
+        this.dispose();
+//        if (txtReportID.getText().equals("") || txtEmID.getText().equals("") || txtCuID.getText().equals("") || txtRepoTotal.getText().equals("")) {
+//            JOptionPane.showMessageDialog(this, "Something is empty!");
+//        } else {
+//            try {
+////                dateR = dateReport.getDate();
+////                report_date = new java.sql.Date(dateR.getTime());
+//                getConnect();
+//                String sql_add = "insert into report values (?,?,?,?,?)";
+//                String sql_check = "select * from report where report_id=?";
+//                excuteAdd(sql_add);
+//                excuteCheck(sql_check);
+//                check.setInt(1, Integer.valueOf(txtReportID.getText()));
+//                rs = check.executeQuery();
+//                if (rs.next()) {
+//                    JOptionPane.showMessageDialog(this, "Report have already!");
+//                } else {
+//                    add.setInt(1, Integer.valueOf(txtReportID.getText()));
+//                    add.setString(2, timeStamp);
+//                    add.setInt(3, Integer.valueOf(txtEmID.getText()));
+//                    add.setInt(4, Integer.valueOf(txtCuID.getText()));
+//                    add.setInt(5, Integer.valueOf(txtRepoTotal.getText()));
+//                    int row = add.executeUpdate();
+//                    JOptionPane.showMessageDialog(this, "Add successful!");
+//                    SelectRepo();
+//                }
+//            } catch (SQLException ex) {
+//                Logger.getLogger(StartScreenAdmin.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//        closeConnect();
     }//GEN-LAST:event_btnAddRepoActionPerformed
 
     private void btnReportDetailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportDetailActionPerformed

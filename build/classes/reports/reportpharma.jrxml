@@ -3,6 +3,46 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#F0F8FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFE1FF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
 	<queryString language="SQL">
 		<![CDATA[select a.report_id, a.report_date, c.cus_name , e.med_name, e.med_unitprice, b.amout, a.total, d.nv_name from pharmacydb.report a, pharmacydb.reportdetail  b, pharmacydb.customer c, pharmacydb.nv d, pharmacydb.medicine e where a.report_id=b.report_id and a.cus_id=c.cus_id and a.nv_id=d.nv_id and b.med_id=e.med_id]]>
 	</queryString>
@@ -34,79 +74,102 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch"/>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="802" height="79" uuid="bd926846-e056-4f61-8f77-1f45fd785347"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="24" isBold="true" isItalic="true"/>
+				</textElement>
+				<text><![CDATA[REPORT]]></text>
+			</staticText>
+		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="35" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="257a823c-0fdb-4a30-93bd-5ddc81056e4d"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[List Report]]></text>
+			</staticText>
+			<textField pattern="dd/MM/yyyy h.mm a">
+				<reportElement x="653" y="0" width="149" height="20" uuid="983e33e8-389d-4dd4-a3ff-5a69bb9f1d8d"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="40" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="63" height="20" uuid="0080bb3d-d666-4d16-aace-dad6fa79f43a"/>
-				<text><![CDATA[report_id]]></text>
+				<text><![CDATA[Report ID]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="63" y="0" width="100" height="20" uuid="424bf9f7-e75b-441c-a5f0-981bf746161d"/>
-				<text><![CDATA[report_date]]></text>
+				<text><![CDATA[Report Date]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="163" y="0" width="100" height="20" uuid="511af792-614d-4772-9a54-9dccb6257c90"/>
-				<text><![CDATA[cus_name]]></text>
+				<text><![CDATA[Customer Name]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="263" y="0" width="100" height="20" uuid="92a98e45-eacc-4dbf-91a7-b03d12a5b9f4"/>
-				<text><![CDATA[med_name]]></text>
+				<text><![CDATA[Medicine Name]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="363" y="0" width="100" height="20" uuid="c6b52806-7a3d-4193-ae78-cf819f892bde"/>
-				<text><![CDATA[med_unitprice]]></text>
+				<text><![CDATA[Price]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="463" y="0" width="100" height="20" uuid="bcd0677a-458e-4215-8e52-67e73808924a"/>
-				<text><![CDATA[amout]]></text>
+				<text><![CDATA[Amount]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="563" y="0" width="100" height="20" uuid="484ed2be-a66c-4a18-bdf4-a6d126c79e62"/>
-				<text><![CDATA[total]]></text>
+				<text><![CDATA[Total]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="663" y="0" width="100" height="20" uuid="fc877648-5d1a-42c4-bdcb-4de7d33da996"/>
-				<text><![CDATA[nv_name]]></text>
+				<text><![CDATA[Employess Name]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="35" splitType="Stretch">
+		<band height="33" splitType="Stretch">
 			<textField>
-				<reportElement x="0" y="0" width="63" height="20" uuid="2cc164b8-7e83-4d60-8720-7664c0a3c27e"/>
+				<reportElement x="0" y="0" width="63" height="20" uuid="2891fbd2-e1a4-43ce-8510-c6605bbcb2b3"/>
 				<textFieldExpression><![CDATA[$F{report_id}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="63" y="0" width="100" height="20" uuid="52be6fa7-3953-4dd9-84c9-f6462bb93880"/>
+				<reportElement x="63" y="0" width="100" height="20" uuid="18e6f2e1-647b-4fae-8041-3c1bfc37dd18"/>
 				<textFieldExpression><![CDATA[$F{report_date}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="163" y="0" width="100" height="20" uuid="3c8ee8e6-95e8-4875-b860-b7aa10a05c1a"/>
+				<reportElement x="163" y="0" width="100" height="20" uuid="64b96d50-a5e2-4ef1-adc9-aaeb2e31e86e"/>
 				<textFieldExpression><![CDATA[$F{cus_name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="263" y="0" width="100" height="20" uuid="f96e1be8-f347-4bb1-ac09-b4486b5b9d4c"/>
+				<reportElement x="263" y="0" width="100" height="20" uuid="cea83d3a-4d89-41ba-8148-85d0c9e44234"/>
 				<textFieldExpression><![CDATA[$F{med_name}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="363" y="0" width="100" height="20" uuid="512c45ce-dc16-4997-9b8b-5683b079ba01"/>
+				<reportElement x="363" y="0" width="100" height="20" uuid="ace778f0-abfe-4b17-820e-5d325480068a"/>
 				<textFieldExpression><![CDATA[$F{med_unitprice}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="463" y="0" width="100" height="20" uuid="6b58c666-ceab-43af-8bb9-cb48581a33aa"/>
+				<reportElement x="463" y="0" width="100" height="20" uuid="93d946a7-914a-4481-88d5-a67a5319c90b"/>
 				<textFieldExpression><![CDATA[$F{amout}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="563" y="0" width="100" height="20" uuid="34034761-4f11-44d4-af8a-f515dd940968"/>
+				<reportElement x="563" y="0" width="100" height="20" uuid="16fb50ce-a0a4-4786-8aba-a16801a6a028"/>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="663" y="0" width="100" height="20" uuid="0aa0c337-296a-40d2-a23b-1e7cbd3d40a4"/>
+				<reportElement x="663" y="0" width="100" height="20" uuid="e9b6c5a8-7e67-4c2e-8f37-7a927da08b00"/>
 				<textFieldExpression><![CDATA[$F{nv_name}]]></textFieldExpression>
 			</textField>
 		</band>
