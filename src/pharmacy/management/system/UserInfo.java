@@ -201,21 +201,21 @@ public class UserInfo extends javax.swing.JFrame {
             getConnect();
             //Connection conn = DriverManager.getConnection(url, username_db, password_db);
             //PreparedStatement ps = conn.prepareStatement("select * from nv where user_name=?");
-            String sql_get = "select * from nv where user_name=?";
+            String sql_get = "select * from employees where Username=?";
             excuteGet(sql_get);
             get.setString(1, username);
             rs = get.executeQuery();
             if(rs.next()){
                 txtUsername.setText(username);
-                txtFullname.setText(rs.getString("nv_name"));
-                txtPhone.setText(rs.getString("nv_phone"));
-                txtAdd.setText(rs.getString("nv_add"));  
+                txtFullname.setText(rs.getString("EmployeesName"));
+                txtPhone.setText(rs.getString("EmployeesPhone"));
+                txtAdd.setText(rs.getString("EmployeesAddress"));  
                 //(JTextField)dateBirth.getDateEditor().getUiComponent().setT
                 //String get_date = rs.getString("nv_birth");
                 //SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
                 //Date date = dateformat(rs.getDate("nv_birth"));
                 
-                java.sql.Date get_date =  new java.sql.Date(rs.getDate("nv_birthday").getTime());
+                java.sql.Date get_date =  new java.sql.Date(rs.getDate("EmployeesBirthday").getTime());
 //                if(get_date == null)
 //                {
 //                    dateBirth.setDate(date);
@@ -235,7 +235,7 @@ public class UserInfo extends javax.swing.JFrame {
             getConnect();
             date = dateBirth.getDate();
             get_date = new java.sql.Date(date.getTime());
-            String sql = "update nv set nv_name='"+txtFullname.getText()+"', nv_add='"+txtAdd.getText()+"', nv_birthday='"+get_date+"', nv_phone='"+txtPhone.getText()+"' where user_name='"+username+"'";
+            String sql = "update employees set EmployeesName='"+txtFullname.getText()+"', EmployeesAddress='"+txtAdd.getText()+"', EmployeesBirthday='"+get_date+"', EmployeesPhone='"+txtPhone.getText()+"' where Username='"+username+"'";
             excuteUpdate_Delete(sql);
             JOptionPane.showMessageDialog(this, "Updated Success");
             this.dispose();

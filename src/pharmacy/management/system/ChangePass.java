@@ -163,12 +163,12 @@ public class ChangePass extends javax.swing.JFrame {
             String pw = "";
             getConnect();
 
-            String sql_check = "select pwd from nv where user_name=?";
+            String sql_check = "select Password from employees where Username=?";
             excuteCheck(sql_check);
             check.setString(1, username);
             rs = check.executeQuery();
             if (rs.next()) {
-                pw = rs.getString("pwd");
+                pw = rs.getString("Password");
             }
 
             if (txtCrPass.getText().equals(pw) == false) {
@@ -177,7 +177,7 @@ public class ChangePass extends javax.swing.JFrame {
                 if (txtNewPass.getText().equals(txtRetype.getText()) == false) {
                     JOptionPane.showMessageDialog(this, "Password doesn't match");
                 } else {
-                    String sql_add = "update nv set pwd='"+txtNewPass.getText()+ "' where user_name='"+ Signin.txtUsername.getText() +"' ";
+                    String sql_add = "update employees set Password='"+txtNewPass.getText()+ "' where Username='"+ Signin.txtUsername.getText() +"' ";
                     excuteUpdate_Delete(sql_add);
                     JOptionPane.showMessageDialog(this, "Change password success");
 //                    StartScreenAdmin sa = new StartScreenAdmin();

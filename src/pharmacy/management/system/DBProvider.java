@@ -27,6 +27,8 @@ public class DBProvider {
     public static String username_db = "root";
     public static String password_db = "";
     public static Connection conn = null;
+    public static String last_id = null;
+    public static String insert_id = null;
 
     public static void getConnect() {
         try {
@@ -44,6 +46,7 @@ public class DBProvider {
             Logger.getLogger(DBProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public static void excuteSQL(String sql) {
         try {
             stt = conn.createStatement();
@@ -52,6 +55,7 @@ public class DBProvider {
             Logger.getLogger(DBProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     public static void closeConnect() {
         try {
             conn.close();
@@ -86,13 +90,58 @@ public class DBProvider {
             Logger.getLogger(DBProvider.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-//    public static boolean checkHour(String a, String b, String c){
-//        int A = Integer.valueOf(a);
-//        int B = Integer.valueOf(b);
-//        int C = Integer.valueOf(c);
-//        if(A<0 && A>24) return false;
-//        else if(B<0 && B>60) return false;
-//        else if( C<0 && C>60) return false;
-//        else return true;
+
+    public static String getLastID(String sql, String colname) {
+
+        try {
+            getConnect();
+            excuteCheck(sql);
+            rs = check.executeQuery();
+            if (rs.next()) {
+                last_id = rs.getString(colname);
+            }
+            closeConnect();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBProvider.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return last_id;
+    }
+
+    public static String insertID(String type, String sql, String colname) {
+        int temp = Integer.valueOf(getLastID(sql, colname).substring(3, 10));
+        temp = temp + 1;
+        String tmp = String.valueOf(temp);
+        int len = 7 - tmp.length();
+        switch (len) {
+            case 0:
+                insert_id = type + temp;
+                break;
+            case 1:
+                insert_id = type + "0" + temp;
+                break;
+            case 2:
+                insert_id = type + "00" + temp;
+                break;
+            case 3:
+                insert_id = type + "000" + temp;
+                break;
+            case 4:
+                insert_id = type + "0000" + temp;
+                break;
+            case 5:
+                insert_id = type + "00000" + temp;
+                break;
+            case 6:
+                insert_id = type + "000000" + temp;
+                break;
+            default:
+                break;
+        }
+        return insert_id;
+    }
+
+//    public static int countId(int n) 
+//        getConnect();
+//
 //    }
 }

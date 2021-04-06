@@ -207,16 +207,15 @@ public class Signin extends javax.swing.JFrame {
             txtUsername.requestFocus();
         } else {
             try {
-                //                Class.forName("com.mysql.jdbc.Driver");
                 Connection conn = DriverManager.getConnection(url, username_db, password_db);
-                PreparedStatement ps = conn.prepareStatement("select * from nv where user_name=? and pwd=?");
+                PreparedStatement ps = conn.prepareStatement("select * from employees where Username=? and Password=?");
                 ps.setString(1, txtUsername.getText());
                 ps.setString(2, txtPassword.getText());
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     //String name = rs.getString("full_name");
                     JOptionPane.showMessageDialog(this, "Login successful!");
-                    String pos = rs.getString("position");
+                    String pos = rs.getString("EmployeesPosition");
                     if (pos.equals("admin") == true) {
                         StartScreenAdmin ad = new StartScreenAdmin();
                         ad.setVisible(true);
