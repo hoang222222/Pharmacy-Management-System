@@ -14,7 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.table.AbstractTableModel;
 import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 import static pharmacy.management.system.DBProvider.add;
@@ -47,19 +46,17 @@ public class StartScreenUser extends javax.swing.JFrame {
         SelectMed();
         SelectCus();
         SelectMan();
-        SelectRepo();
+        SelectBill();
         cbxCpndata();
         jdateCurrentMedi();
         jdateCurrentCus();
-        txtDateReport.disable();
+        //txtDateReport.disable();
         jdateCurrentReport();
         txtMedID.disable();
         txtCusID.disable();
         txtManuID.disable();
         txtReportID.disable();
-        txtEmID.disable();
-        txtCuID.disable();
-        txtRepoTotal.disable();
+
     }
 
     /**
@@ -107,8 +104,6 @@ public class StartScreenUser extends javax.swing.JFrame {
         txtMedName = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         txtMedUnit = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
-        txtMedInventory = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         dateExp = new com.toedter.calendar.JDateChooser();
         jLabel8 = new javax.swing.JLabel();
@@ -138,23 +133,10 @@ public class StartScreenUser extends javax.swing.JFrame {
         pnlReportInfo = new javax.swing.JPanel();
         jLabel31 = new javax.swing.JLabel();
         txtReportID = new javax.swing.JTextField();
-        jLabel32 = new javax.swing.JLabel();
-        jLabel33 = new javax.swing.JLabel();
-        txtEmID = new javax.swing.JTextField();
-        jLabel34 = new javax.swing.JLabel();
-        txtCuID = new javax.swing.JTextField();
-        jLabel35 = new javax.swing.JLabel();
-        txtRepoTotal = new javax.swing.JTextField();
-        txtDateReport = new javax.swing.JTextField();
         pnlButtonReport = new javax.swing.JPanel();
-        btnAddRepo = new javax.swing.JButton();
-        btnUpdateRepo = new javax.swing.JButton();
-        btnDeleteRepo = new javax.swing.JButton();
+        btnAddBill = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
-        tbReport = new javax.swing.JTable();
-        jPanel1 = new javax.swing.JPanel();
-        btnReportDetail = new javax.swing.JButton();
-        btnClearRepo = new javax.swing.JButton();
+        tbBill = new javax.swing.JTable();
         mbPharma = new javax.swing.JMenuBar();
         mSystem = new javax.swing.JMenu();
         btnSignOut = new javax.swing.JMenuItem();
@@ -425,14 +407,6 @@ public class StartScreenUser extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setText("Inventory:");
-
-        txtMedInventory.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtMedInventoryKeyTyped(evt);
-            }
-        });
-
         jLabel7.setText("Exp:");
 
         dateExp.setDateFormatString("yyyy-MM-dd");
@@ -461,10 +435,6 @@ public class StartScreenUser extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txtMedUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlInforMedLayout.createSequentialGroup()
-                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtMedInventory, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlInforMedLayout.createSequentialGroup()
                                 .addGroup(pnlInforMedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE))
@@ -491,10 +461,6 @@ public class StartScreenUser extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(txtMedUnit, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(pnlInforMedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(txtMedInventory, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
                 .addGroup(pnlInforMedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addComponent(dateExp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -502,7 +468,7 @@ public class StartScreenUser extends javax.swing.JFrame {
                 .addGroup(pnlInforMedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(cbxCompany, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(74, Short.MAX_VALUE))
         );
 
         tbMedi.setModel(new javax.swing.table.DefaultTableModel(
@@ -708,19 +674,11 @@ public class StartScreenUser extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 153, 102));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("MANAGE REPORT");
+        jLabel9.setText("MANAGE BILL");
 
         pnlReportInfo.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel31.setText("Report ID:");
-
-        jLabel32.setText("Date:");
-
-        jLabel33.setText("Empployee ID:");
-
-        jLabel34.setText("Customer ID:");
-
-        jLabel35.setText("Total:");
+        jLabel31.setText("Bill ID:");
 
         javax.swing.GroupLayout pnlReportInfoLayout = new javax.swing.GroupLayout(pnlReportInfo);
         pnlReportInfo.setLayout(pnlReportInfoLayout);
@@ -728,20 +686,10 @@ public class StartScreenUser extends javax.swing.JFrame {
             pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlReportInfoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel34, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel33, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel35, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(txtRepoTotal, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 171, Short.MAX_VALUE)
-                    .addComponent(txtCuID, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtEmID, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtDateReport, javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtReportID))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(txtReportID, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(25, Short.MAX_VALUE))
         );
         pnlReportInfoLayout.setVerticalGroup(
             pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -750,52 +698,20 @@ public class StartScreenUser extends javax.swing.JFrame {
                 .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel31)
                     .addComponent(txtReportID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel32)
-                    .addComponent(txtDateReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel33)
-                    .addComponent(txtEmID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel34)
-                    .addComponent(txtCuID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel35)
-                    .addComponent(txtRepoTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pnlButtonReport.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnAddRepo.setText("Add");
-        btnAddRepo.addActionListener(new java.awt.event.ActionListener() {
+        btnAddBill.setText("Add");
+        btnAddBill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddRepoActionPerformed(evt);
+                btnAddBillActionPerformed(evt);
             }
         });
-        pnlButtonReport.add(btnAddRepo);
+        pnlButtonReport.add(btnAddBill);
 
-        btnUpdateRepo.setText("Update");
-        btnUpdateRepo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateRepoActionPerformed(evt);
-            }
-        });
-        pnlButtonReport.add(btnUpdateRepo);
-
-        btnDeleteRepo.setText("Delete");
-        btnDeleteRepo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDeleteRepoActionPerformed(evt);
-            }
-        });
-        pnlButtonReport.add(btnDeleteRepo);
-
-        tbReport.setModel(new javax.swing.table.DefaultTableModel(
+        tbBill.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -806,25 +722,12 @@ public class StartScreenUser extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tbReport.addMouseListener(new java.awt.event.MouseAdapter() {
+        tbBill.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                tbReportMouseClicked(evt);
+                tbBillMouseClicked(evt);
             }
         });
-        jScrollPane5.setViewportView(tbReport);
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-
-        btnReportDetail.setText("Details");
-        jPanel1.add(btnReportDetail);
-
-        btnClearRepo.setText("Clear");
-        btnClearRepo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnClearRepoActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnClearRepo);
+        jScrollPane5.setViewportView(tbBill);
 
         javax.swing.GroupLayout pnlReportLayout = new javax.swing.GroupLayout(pnlReport);
         pnlReport.setLayout(pnlReportLayout);
@@ -836,12 +739,11 @@ public class StartScreenUser extends javax.swing.JFrame {
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlReportLayout.createSequentialGroup()
                         .addGap(0, 5, Short.MAX_VALUE)
-                        .addGroup(pnlReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pnlButtonReport, javax.swing.GroupLayout.DEFAULT_SIZE, 309, Short.MAX_VALUE)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pnlReportInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(pnlReportInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(139, 139, 139)
+                        .addComponent(pnlButtonReport, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(199, 199, 199))
+                    .addComponent(jScrollPane5))
                 .addContainerGap())
         );
         pnlReportLayout.setVerticalGroup(
@@ -851,17 +753,14 @@ public class StartScreenUser extends javax.swing.JFrame {
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(pnlReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlReportLayout.createSequentialGroup()
-                        .addComponent(pnlReportInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(pnlButtonReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(pnlReportInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlButtonReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
-        tpPharma.addTab("Report", pnlReport);
+        tpPharma.addTab("Bill", pnlReport);
 
         mbPharma.setBackground(new java.awt.Color(255, 255, 255));
         mbPharma.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -938,7 +837,7 @@ public class StartScreenUser extends javax.swing.JFrame {
 
 
     public void SelectMed() {
-        String sql = "select a.MedicineID, a.MedicineName, a.MedicineUnitPrice, a.MedicineInventory, a.MedicineExpire, b.ManufactorName from medicine a, manufactor b where a.ManufactorID = b.ManufactorID";
+        String sql = "select a.MedicineID, a.MedicineName, a.MedicineUnitPrice, a.MedicineExpire, b.ManufactorName from medicine a, manufactor b where a.ManufactorID = b.ManufactorID";
         dataTable(sql, tbMedi);
     }
 
@@ -952,9 +851,10 @@ public class StartScreenUser extends javax.swing.JFrame {
         dataTable(sql, tbManu);
     }
 
-    public void SelectRepo() {
-        String sql = "select * from report";
-        dataTable(sql, tbReport);
+    public void SelectBill() {
+        String sql = "select a.BillID, a.BillDate, c.CustomerName , e.MedicineName, e.MedicineUnitPrice, b.Amout, a.BillTotal, d.EmployeesID from pharmacydb.bill a, pharmacydb.bill_detail  b, pharmacydb.customer c, pharmacydb.employees d, pharmacydb.medicine e where a.BillID=b.BillID and a.CustomerID=c.CustomerID and a.EmployeesID=d.EmployeesID and b.MedicineID=e.MedicineID";
+      
+        dataTable(sql, tbBill);
     }
 
     public void dataTable(String sql, JTable tb) {
@@ -980,7 +880,7 @@ public class StartScreenUser extends javax.swing.JFrame {
     String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
 
     public void jdateCurrentReport() {
-        txtDateReport.setText(timeStamp);
+       // txtDateReport.setText(timeStamp);
     }
 
     public void cbxCpndata() {
@@ -1032,8 +932,8 @@ public class StartScreenUser extends javax.swing.JFrame {
         // TODO add your handling code here:
         dateEx = dateExp.getDate();
         MyExp = new java.sql.Date(dateEx.getTime());
-        if (txtMedName.getText().equals("") || txtMedUnit.getText().equals("") || txtMedInventory.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Sonething is empty!");
+        if (txtMedName.getText().equals("") || txtMedUnit.getText().equals("") ) {
+            JOptionPane.showMessageDialog(this, "Something is empty!");
         } else {
             try {
                 String man_id = "";
@@ -1042,7 +942,7 @@ public class StartScreenUser extends javax.swing.JFrame {
                 String colname = "MedicineID";
                 String type = "MED";
                 String med_id = insertID(type, sql, colname);
-                String sql_add = "insert into medicine values (?,?,?,?,?,?)";
+                String sql_add = "insert into medicine values (?,?,?,?,?)";
                 String get_id = "select ManufactorID from manufactor where ManufactorName=?";
                 excuteAdd(sql_add);
                 excuteGet(get_id);
@@ -1063,9 +963,8 @@ public class StartScreenUser extends javax.swing.JFrame {
                         add.setString(1, med_id);
                         add.setString(2, txtMedName.getText());
                         add.setInt(3, Integer.valueOf(txtMedUnit.getText()));
-                        add.setInt(4, Integer.valueOf(txtMedInventory.getText()));
-                        add.setDate(5, MyExp);
-                        add.setString(6, man_id);
+                        add.setDate(4, MyExp);
+                        add.setString(5, man_id);
                         int row = add.executeUpdate();
                         JOptionPane.showMessageDialog(this, "Add successful!");
                         SelectMed();
@@ -1082,7 +981,7 @@ public class StartScreenUser extends javax.swing.JFrame {
 
     private void btnUpdateMedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateMedActionPerformed
         // TODO add your handling code here:
-        if (txtMedID.getText().equals("") || txtMedName.getText().equals("") || txtMedUnit.getText().equals("") || txtMedInventory.getText().equals("")) {
+        if (txtMedID.getText().equals("") || txtMedName.getText().equals("") || txtMedUnit.getText().equals("") ) {
             JOptionPane.showMessageDialog(this, "Something is empty");
         } else {
             try {
@@ -1098,7 +997,7 @@ public class StartScreenUser extends javax.swing.JFrame {
                 if (rs.next()) {
                     man_id = rs.getString("ManufactorID");
                 }
-                String sql = "update medicine set MedicineName='" + txtMedName.getText() + "', MedicineUnitPrice=" + txtMedUnit.getText() + ", MedicineInventory= '" + txtMedInventory.getText() + "', MedicineExpire='" + MyExp + "',ManufactorID='" + man_id + "' where MedicineID='" + txtMedID.getText() + "'";
+                String sql = "update medicine set MedicineName='" + txtMedName.getText() + "', MedicineUnitPrice=" + txtMedUnit.getText() + ", MedicineExpire='" + MyExp + "',ManufactorID='" + man_id + "' where MedicineID='" + txtMedID.getText() + "'";
                 excuteUpdate_Delete(sql);
                 JOptionPane.showMessageDialog(this, "Updated Success");
                 SelectMed();
@@ -1111,7 +1010,7 @@ public class StartScreenUser extends javax.swing.JFrame {
 
     private void btnDeleteMedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteMedActionPerformed
         // TODO add your handling code here:
-        if (txtMedID.getText().equals("") || txtMedName.getText().equals("") || txtMedUnit.getText().equals("") || txtMedInventory.getText().equals("")) {
+        if (txtMedID.getText().equals("") || txtMedName.getText().equals("") || txtMedUnit.getText().equals("") ) {
             JOptionPane.showMessageDialog(this, "Somthing has been empty!");
         } else {
             getConnect();
@@ -1131,7 +1030,6 @@ public class StartScreenUser extends javax.swing.JFrame {
         txtMedUnit.setText("");
         jdateCurrentMedi();
         cbxCompany.setSelectedIndex(0);
-        txtMedInventory.setText("");
     }//GEN-LAST:event_btnClearMedActionPerformed
 
     private void txtMedIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMedIDKeyTyped
@@ -1147,15 +1045,6 @@ public class StartScreenUser extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtMedUnitKeyTyped
 
-    private void txtMedInventoryKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMedInventoryKeyTyped
-        // TODO add your handling code here:
-        char char_input = evt.getKeyChar();
-        if (!Character.isDigit(char_input) && (char_input != '\b')) {
-            JOptionPane.showMessageDialog(this, "Only Positive Numbers Allowed");
-            txtMedInventory.requestFocus();
-        }
-    }//GEN-LAST:event_txtMedInventoryKeyTyped
-
     private void tbMediMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbMediMouseClicked
         try {
             // TODO add your handling code here:
@@ -1164,74 +1053,14 @@ public class StartScreenUser extends javax.swing.JFrame {
             txtMedID.setText(model.getValueAt(Myindex, 0).toString());
             txtMedName.setText(model.getValueAt(Myindex, 1).toString());
             txtMedUnit.setText(model.getValueAt(Myindex, 2).toString());
-            txtMedInventory.setText(model.getValueAt(Myindex, 3).toString());
-            Date dateE = new SimpleDateFormat("yyyy-MM-dd").parse(model.getValueAt(Myindex, 4).toString());
+            Date dateE = new SimpleDateFormat("yyyy-MM-dd").parse(model.getValueAt(Myindex, 3).toString());
             dateExp.setDate(dateE);
-            String company = model.getValueAt(Myindex, 5).toString();
+            String company = model.getValueAt(Myindex, 4).toString();
             cbxCompany.setSelectedItem(company);
         } catch (ParseException ex) {
             Logger.getLogger(StartScreenAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_tbMediMouseClicked
-
-    private void btnAddCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCusActionPerformed
-        // TODO add your handling code here:
-        if (txtCusName.getText().equals("") || txtCusAdd.getText().equals("") || txtCusPhone.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Somthing is empty!");
-        } else {
-            try {
-                String cus_name = "", cus_phone = "";
-                dateCus = dateCusBirth.getDate();
-                cus_birth = new java.sql.Date(dateCus.getTime());
-                getConnect();
-                String sql = "SELECT CustomerID FROM customer ORDER BY CustomerID DESC LIMIT 1";
-                String colname = "CustomerID";
-                String type = "CUS";
-                String cus_id = insertID(type, sql, colname);
-                String sql_add = "insert into customer values (?,?,?,?,?)";
-                String sql_check = "select * from customer where CustomerName=?";
-                excuteAdd(sql_add);
-                excuteCheck(sql_check);
-                check.setString(1, txtCusName.getText());
-                rs = check.executeQuery();
-                if (rs.next()) {
-                    cus_name = rs.getString("CustomerName");
-                    cus_phone = rs.getString("CustomerPhone");
-                }
-                if ((txtCusName.getText().equals(cus_name) == true) && (txtCusPhone.getText().equals(cus_phone) == true)) {
-                    JOptionPane.showMessageDialog(this, "Customer have already!");
-                } else {
-                    add.setString(1, cus_id);
-                    add.setString(2, txtCusName.getText());
-                    add.setString(3, txtCusAdd.getText());
-                    add.setString(4, txtCusPhone.getText());
-                    add.setDate(5, cus_birth);
-                    int row = add.executeUpdate();
-                    JOptionPane.showMessageDialog(this, "Add successful!");
-                    SelectCus();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(StartScreenAdmin.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        closeConnect();
-    }//GEN-LAST:event_btnAddCusActionPerformed
-
-    private void btnUpdateCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateCusActionPerformed
-        // TODO add your handling code here:
-        if (txtCusID.getText().equals("") || txtCusName.getText().equals("") || txtCusAdd.getText().equals("") || txtCusPhone.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Something has been empty!");
-        } else {
-            dateCus = dateCusBirth.getDate();
-            cus_birth = new java.sql.Date(dateCus.getTime());
-            getConnect();
-            String sql = "update customer set CustomerName='" + txtCusName.getText() + "',CustomerAddress='" + txtCusAdd.getText() + "',CustomerPhone='" + txtCusPhone.getText() + "',CustomerBirthday='" + cus_birth + "' where CustomerID='" + txtCusID.getText() + "'";
-            excuteUpdate_Delete(sql);
-            JOptionPane.showMessageDialog(this, "Updated Success");
-            SelectCus();
-        }
-        closeConnect();
-    }//GEN-LAST:event_btnUpdateCusActionPerformed
 
     private void btnDeleteCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteCusActionPerformed
         // TODO add your handling code here:
@@ -1387,41 +1216,16 @@ public class StartScreenUser extends javax.swing.JFrame {
         a.setVisible(true);
     }//GEN-LAST:event_mAboutMouseClicked
 
-    private void tbReportMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbReportMouseClicked
+    private void tbBillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbBillMouseClicked
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel) tbReport.getModel();
-        int Myindex = tbReport.getSelectedRow();
-        txtReportID.setText(model.getValueAt(Myindex, 0).toString());
-        String dateR = model.getValueAt(Myindex, 1).toString();
-        txtDateReport.setText(dateR);
-        txtEmID.setText(model.getValueAt(Myindex, 2).toString());
-        txtCuID.setText(model.getValueAt(Myindex, 3).toString());
-        txtRepoTotal.setText(model.getValueAt(Myindex, 4).toString());
-    }//GEN-LAST:event_tbReportMouseClicked
+        DefaultTableModel model = (DefaultTableModel) tbBill.getModel();
+        int Myindex = tbBill.getSelectedRow();
+        txtReportID.setText(model.getValueAt(Myindex, 0).toString());        
+    }//GEN-LAST:event_tbBillMouseClicked
 
-    private void btnUpdateRepoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateRepoActionPerformed
+    private void btnAddBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBillActionPerformed
         // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "User has not permision");
-    }//GEN-LAST:event_btnUpdateRepoActionPerformed
-
-    private void btnDeleteRepoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteRepoActionPerformed
-        // TODO add your handling code here:
-        JOptionPane.showMessageDialog(this, "User has not permision");
-    }//GEN-LAST:event_btnDeleteRepoActionPerformed
-
-    private void btnClearRepoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearRepoActionPerformed
-        // TODO add your handling code here:
-
-        txtReportID.setText("");
-        txtEmID.setText("");
-        txtCuID.setText("");
-        txtRepoTotal.setText("");
-        //txtHH.setText("");
-    }//GEN-LAST:event_btnClearRepoActionPerformed
-
-    private void btnAddRepoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddRepoActionPerformed
-        // TODO add your handling code here:
-        AddReport ar = new AddReport();
+        AddBill ar = new AddBill();
         ar.setVisible(true);
         this.dispose();
 //        if (txtReportID.getText().equals("") || txtEmID.getText().equals("") || txtCuID.getText().equals("") || txtRepoTotal.getText().equals("")) {
@@ -1454,7 +1258,7 @@ public class StartScreenUser extends javax.swing.JFrame {
 //            }
 //        }
 //        closeConnect();
-    }//GEN-LAST:event_btnAddRepoActionPerformed
+    }//GEN-LAST:event_btnAddBillActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
@@ -1463,6 +1267,26 @@ public class StartScreenUser extends javax.swing.JFrame {
         String col = "cus_id";
         String lastid = getLastID(sql, col);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void btnUpdateCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateCusActionPerformed
+         // TODO add your handling code here:
+         if (txtCusAdd.getText().equals("") || txtCusName.getText().equals("") || txtCusPhone.getText().equals("") ) {
+            JOptionPane.showMessageDialog(this, "Somthing is empty");
+        } else {
+            getConnect();
+            dateCus = dateCusBirth.getDate();
+            cus_birth = new java.sql.Date(dateCus.getTime());
+            String sql = "update customer set CustomerName='" + txtCusName.getText() + "', CustomerAddress='" + txtCusAdd.getText() + "',CustomerPhone='" + txtCusPhone.getText() +"', CustomerBirthday='"+ cus_birth +"' where CustomerID='" + txtCusID.getText() + "'";
+            excuteUpdate_Delete(sql);
+            SelectCus();
+            JOptionPane.showMessageDialog(this, "Updated Success");
+        }
+    }//GEN-LAST:event_btnUpdateCusActionPerformed
+
+    private void btnAddCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddCusActionPerformed
+         // TODO add your handling code here:
+         
+    }//GEN-LAST:event_btnAddCusActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1500,26 +1324,22 @@ public class StartScreenUser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAddBill;
     private javax.swing.JButton btnAddCus;
     private javax.swing.JButton btnAddManu;
     private javax.swing.JButton btnAddMed;
-    private javax.swing.JButton btnAddRepo;
     private javax.swing.JMenuItem btnChangePassword;
     private javax.swing.JButton btnClearCus;
     private javax.swing.JButton btnClearManu;
     private javax.swing.JButton btnClearMed;
-    private javax.swing.JButton btnClearRepo;
     private javax.swing.JButton btnDeleteCus;
     private javax.swing.JButton btnDeleteManu;
     private javax.swing.JButton btnDeleteMed;
-    private javax.swing.JButton btnDeleteRepo;
     private javax.swing.JMenuItem btnExit;
-    private javax.swing.JButton btnReportDetail;
     private javax.swing.JMenuItem btnSignOut;
     private javax.swing.JButton btnUpdateCus;
     private javax.swing.JButton btnUpdateManu;
     private javax.swing.JButton btnUpdateMed;
-    private javax.swing.JButton btnUpdateRepo;
     private javax.swing.JMenuItem btnUserInfo;
     private javax.swing.JComboBox<String> cbxCompany;
     private com.toedter.calendar.JDateChooser dateCusBirth;
@@ -1541,15 +1361,9 @@ public class StartScreenUser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel31;
-    private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel33;
-    private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1570,27 +1384,22 @@ public class StartScreenUser extends javax.swing.JFrame {
     private javax.swing.JPanel pnlMedicine;
     private javax.swing.JPanel pnlReport;
     private javax.swing.JPanel pnlReportInfo;
+    private javax.swing.JTable tbBill;
     private javax.swing.JTable tbCus;
     private javax.swing.JTable tbManu;
     private javax.swing.JTable tbMedi;
-    private javax.swing.JTable tbReport;
     public static javax.swing.JTabbedPane tpPharma;
-    private javax.swing.JTextField txtCuID;
     private javax.swing.JTextField txtCusAdd;
     private javax.swing.JTextField txtCusID;
     private javax.swing.JTextField txtCusName;
     private javax.swing.JTextField txtCusPhone;
-    private javax.swing.JTextField txtDateReport;
-    private javax.swing.JTextField txtEmID;
     private javax.swing.JTextField txtManuAdd;
     private javax.swing.JTextField txtManuID;
     private javax.swing.JTextField txtManuName;
     private javax.swing.JTextField txtManuPhone;
     private javax.swing.JTextField txtMedID;
-    private javax.swing.JTextField txtMedInventory;
     private javax.swing.JTextField txtMedName;
     private javax.swing.JTextField txtMedUnit;
-    private javax.swing.JTextField txtRepoTotal;
     private javax.swing.JTextField txtReportID;
     // End of variables declaration//GEN-END:variables
 }

@@ -10,7 +10,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.*;
 import javax.swing.JOptionPane;
 
 /**
@@ -18,7 +17,9 @@ import javax.swing.JOptionPane;
  * @author HOANG
  */
 public class Signin extends javax.swing.JFrame {
-
+    String url = "jdbc:mysql://localhost:3306/pharmacydb";
+    String username_db = "root";
+    String password_db = "";
     /**
      * Creates new form Login
      */
@@ -243,9 +244,7 @@ public class Signin extends javax.swing.JFrame {
     private void txtUsernameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtUsernameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtUsernameActionPerformed
-    String url = "jdbc:mysql://localhost:3306/pharmacydb";
-    String username_db = "root";
-    String password_db = "";
+    
 
     /**
      * @param args the command line arguments
