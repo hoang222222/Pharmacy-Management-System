@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 06, 2021 lúc 10:18 PM
+-- Thời gian đã tạo: Th4 07, 2021 lúc 08:13 PM
 -- Phiên bản máy phục vụ: 10.4.17-MariaDB
 -- Phiên bản PHP: 8.0.2
 
@@ -32,7 +32,7 @@ CREATE TABLE `bill` (
   `BillDate` varchar(25) NOT NULL,
   `EmployeesID` varchar(10) NOT NULL,
   `CustomerID` varchar(10) NOT NULL,
-  `BillTotal` int(20) DEFAULT NULL
+  `BillTotal` int(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -41,7 +41,9 @@ CREATE TABLE `bill` (
 
 INSERT INTO `bill` (`BillID`, `BillDate`, `EmployeesID`, `CustomerID`, `BillTotal`) VALUES
 ('BIL0000001', '2018-12-08 06:55:51', 'EMP0000004', 'CUS0000003', 7000000),
-('BIL0000002', '2018-05-06 05:20:00', 'EMP0000005', 'CUS0000002', 500000);
+('BIL0000002', '2018-05-06 05:20:00', 'EMP0000005', 'CUS0000002', 500000),
+('BIL0000003', '2021-04-07 22:27:02', 'EMP0000002', 'CUS0000001', 114805),
+('BIL0000004', '2021-04-07 23:06:43', 'EMP0000002', 'CUS0000001', 69070);
 
 -- --------------------------------------------------------
 
@@ -62,7 +64,10 @@ CREATE TABLE `bill_detail` (
 INSERT INTO `bill_detail` (`BillID`, `MedicineID`, `Amout`) VALUES
 ('BIL0000001', 'MED0000002', 5),
 ('BIL0000001', 'MED0000003', 3),
-('BIL0000002', 'MED0000004', 7);
+('BIL0000002', 'MED0000004', 7),
+('BIL0000003', 'MED0000001', 2),
+('BIL0000003', 'MED0000002', 3),
+('BIL0000004', 'MED0000002', 2);
 
 -- --------------------------------------------------------
 
@@ -77,7 +82,7 @@ CREATE TABLE `bill_view` (
 ,`MedicineName` varchar(50)
 ,`MedicineUnitPrice` int(11)
 ,`Amout` int(11)
-,`BillTotal` int(20)
+,`BillTotal` int(100)
 ,`EmployeesName` varchar(50)
 );
 
@@ -105,7 +110,9 @@ INSERT INTO `customer` (`CustomerID`, `CustomerName`, `CustomerAddress`, `Custom
 ('CUS0000003', 'cus c', 'hn', '23424', '1999-10-08'),
 ('CUS0000004', 'cus d', 'qn', '1231949', '1997-05-04'),
 ('CUS0000005', 'cus e', 'dn', '94535', '1995-09-04'),
-('CUS0000006', 'cus h234', 'hn', '23424234', '1999-10-26');
+('CUS0000006', 'cus h234', 'hn', '23424234', '1999-10-26'),
+('CUS0000007', 'cus a', NULL, '243424', NULL),
+('CUS0000008', 'cus a', NULL, '123', NULL);
 
 -- --------------------------------------------------------
 
@@ -183,8 +190,8 @@ CREATE TABLE `medicine` (
 --
 
 INSERT INTO `medicine` (`MedicineID`, `MedicineName`, `MedicineUnitPrice`, `MedicineInventory`, `MedicineExpire`, `ManufactorID`) VALUES
-('MED0000001', 'thuoc a', 5600, 24, '2025-07-08', 'MAN0000003'),
-('MED0000002', 'thuoc b', 34535, 324, '2025-07-18', 'MAN0000002'),
+('MED0000001', 'thuoc a', 5600, 1563, '2025-07-08', 'MAN0000003'),
+('MED0000002', 'thuoc b', 34535, 318, '2025-07-18', 'MAN0000002'),
 ('MED0000003', 'thuoc c', 345646, 6764, '2025-07-09', 'MAN0000001'),
 ('MED0000004', 'thuoc d', 3535, 453, '2025-07-08', 'MAN0000004'),
 ('MED0000006', 'thuoc z', 353, 345, '2027-07-22', 'MAN0000007'),
