@@ -21,6 +21,7 @@ import net.proteanit.sql.DbUtils;
 import static pharmacy.management.system.DBProvider.add;
 import static pharmacy.management.system.DBProvider.check;
 import static pharmacy.management.system.DBProvider.closeConnect;
+import static pharmacy.management.system.DBProvider.dataTable;
 import static pharmacy.management.system.DBProvider.excuteAdd;
 import static pharmacy.management.system.DBProvider.excuteCheck;
 import static pharmacy.management.system.DBProvider.excuteGet;
@@ -53,7 +54,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         jdateCurrentMedi();
         jdateCurrentCus();
         jdateCurrentEmp();
-        jdateCurrentReport();
+//        jdateCurrentBill();
         cbxEmptypeData();
         txtCusID.disable();
         txtEmpID.disable();
@@ -159,7 +160,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         btnUpdateEmp = new javax.swing.JButton();
         btnDeleteEmp = new javax.swing.JButton();
         btnClearEmp = new javax.swing.JButton();
-        pnlReport = new javax.swing.JPanel();
+        pnlBill = new javax.swing.JPanel();
         jLabel31 = new javax.swing.JLabel();
         txtBillID = new javax.swing.JTextField();
         jLabel30 = new javax.swing.JLabel();
@@ -167,7 +168,6 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         tbBill = new javax.swing.JTable();
         pnlButtonReport = new javax.swing.JPanel();
         btnAddBill = new javax.swing.JButton();
-        btnUpdateBill = new javax.swing.JButton();
         btnDeleteBill = new javax.swing.JButton();
         btnClearBill = new javax.swing.JButton();
         mbPharma = new javax.swing.JMenuBar();
@@ -180,6 +180,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Pharmacy Management System (Adminstrator)");
+        setResizable(false);
 
         tbAdmin.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -330,7 +331,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonMed.add(btnDeleteMed);
 
-        btnClearMed.setText("Clear");
+        btnClearMed.setText("Reset");
         btnClearMed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnClearMedActionPerformed(evt);
@@ -508,7 +509,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonCus.add(btnDeleteCus);
 
-        btnClearCus.setText("Clear");
+        btnClearCus.setText("Reset");
         btnClearCus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnClearCusActionPerformed(evt);
@@ -658,7 +659,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonManu.add(btnDeleteManu);
 
-        btnClearManu.setText("Clear");
+        btnClearManu.setText("Reset");
         btnClearManu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnClearManuActionPerformed(evt);
@@ -842,7 +843,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonEmp.add(btnDeleteEmp);
 
-        btnClearEmp.setText("Clear");
+        btnClearEmp.setText("Reset");
         btnClearEmp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnClearEmpActionPerformed(evt);
@@ -883,7 +884,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
 
         tbAdmin.addTab("Employess", pnlEmployees);
 
-        pnlReport.setBackground(new java.awt.Color(255, 255, 255));
+        pnlBill.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel31.setText("Bill ID:");
 
@@ -930,14 +931,6 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonReport.add(btnAddBill);
 
-        btnUpdateBill.setText("Update");
-        btnUpdateBill.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnUpdateBillActionPerformed(evt);
-            }
-        });
-        pnlButtonReport.add(btnUpdateBill);
-
         btnDeleteBill.setText("Delete");
         btnDeleteBill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -946,7 +939,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonReport.add(btnDeleteBill);
 
-        btnClearBill.setText("Clear");
+        btnClearBill.setText("Reset");
         btnClearBill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnClearBillActionPerformed(evt);
@@ -954,16 +947,16 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonReport.add(btnClearBill);
 
-        javax.swing.GroupLayout pnlReportLayout = new javax.swing.GroupLayout(pnlReport);
-        pnlReport.setLayout(pnlReportLayout);
-        pnlReportLayout.setHorizontalGroup(
-            pnlReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlReportLayout.createSequentialGroup()
+        javax.swing.GroupLayout pnlBillLayout = new javax.swing.GroupLayout(pnlBill);
+        pnlBill.setLayout(pnlBillLayout);
+        pnlBillLayout.setHorizontalGroup(
+            pnlBillLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBillLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlBillLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlReportLayout.createSequentialGroup()
+                    .addGroup(pnlBillLayout.createSequentialGroup()
                         .addGap(11, 11, 11)
                         .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
@@ -973,14 +966,14 @@ public class StartScreenAdmin extends javax.swing.JFrame {
                         .addGap(0, 246, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        pnlReportLayout.setVerticalGroup(
-            pnlReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlReportLayout.createSequentialGroup()
+        pnlBillLayout.setVerticalGroup(
+            pnlBillLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlBillLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel30, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(pnlReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(pnlBillLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBillLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel31)
                         .addComponent(txtBillID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(pnlButtonReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -989,7 +982,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        tbAdmin.addTab("Bill", pnlReport);
+        tbAdmin.addTab("Bill", pnlBill);
 
         mbPharma.setBackground(new java.awt.Color(255, 255, 255));
         mbPharma.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -1045,7 +1038,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     public void SelectMed() {
-        String sql = "select a.MedicineID, a.MedicineName, a.MedicineUnitPrice, a.MedicineExpire, b.ManufactorName from medicine a, manufactor b where a.ManufactorID = b.ManufactorID";
+        String sql = "select a.MedicineID, a.MedicineName, a.MedicineUnitPrice, a.MedicineInventory, a.MedicineExpire, b.ManufactorName from medicine a, manufactor b where a.ManufactorID = b.ManufactorID";
         dataTable(sql, tbMedi);
     }
 
@@ -1066,17 +1059,16 @@ public class StartScreenAdmin extends javax.swing.JFrame {
 
     public void SelectBill() {
 //        String sql = "select a.ReportID, a.ReportDate, c.CustomerName , e.MedicineName, e.MedicineUnitPrice, b.Amout, a.ReportTotal, d.EmployeesName from pharmacydb.report a, pharmacydb.reportdetail  b, pharmacydb.customer c, pharmacydb.employees d, pharmacydb.medicine e where a.ReportID=b.ReportID and a.CustomerID=c.CustomerID and a.EmployeesID=d.EmployeesID and b.MedicineID=e.MedicineID";
-        String sql = "select a.BillID, a.BillDate, c.CustomerName , e.MedicineName, e.MedicineUnitPrice, b.Amout, a.BillTotal, d.EmployeesID from pharmacydb.bill a, pharmacydb.bill_detail  b, pharmacydb.customer c, pharmacydb.employees d, pharmacydb.medicine e where a.BillID=b.BillID and a.CustomerID=c.CustomerID and a.EmployeesID=d.EmployeesID and b.MedicineID=e.MedicineID";
+        String sql = "select a.BillID, a.BillDate, c.CustomerName , e.MedicineName, e.MedicineUnitPrice, b.Amout, (e.MedicineUnitPrice*b.Amout) as Money, d.EmployeesID from pharmacydb.bill a, pharmacydb.bill_detail  b, pharmacydb.customer c, pharmacydb.employees d, pharmacydb.medicine e where a.BillID=b.BillID and a.CustomerID=c.CustomerID and a.EmployeesID=d.EmployeesID and b.MedicineID=e.MedicineID";
         dataTable(sql, tbBill);
     }
 
-    public void dataTable(String sql, JTable tb) {
-        getConnect();
-        excuteSQL(sql);
-        tb.setModel(DbUtils.resultSetToTableModel((rs)));
-        closeConnect();
-    }
-
+//    public void dataTable(String sql, JTable tb) {
+//        getConnect();
+//        excuteSQL(sql);
+//        tb.setModel(DbUtils.resultSetToTableModel((rs)));
+//        closeConnect();
+//    }
     public void jdateCurrentMedi() {
         long millis = System.currentTimeMillis();
         java.sql.Date date = new java.sql.Date(millis);
@@ -1096,28 +1088,6 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         dateEmpBirth.setDate(date);
     }
     String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
-
-    public void jdateCurrentReport() {
-        try {
-            //        long millis = System.currentTimeMillis();
-//        java.sql.Date date = new java.sql.Date(millis);
-//        dateReport.setDate(date);            
-            String[] parts = timeStamp.split(" ");
-            String parts1 = parts[0];
-            String parts2 = parts[1];
-            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(parts1);
-//            dateReport.setDate(date);
-            String[] part = parts2.split(":");
-            String part1 = part[0];
-            String part2 = part[1];
-            String part3 = part[2];
-//            txtHH.setText(part1);
-//            txtMM.setText(part2);
-//            txtSS.setText(part3);
-        } catch (ParseException ex) {
-            Logger.getLogger(StartScreenAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
 
     public void cbxCpndata() {
         try {
@@ -1170,9 +1140,10 @@ public class StartScreenAdmin extends javax.swing.JFrame {
             txtMedID.setText(model.getValueAt(Myindex, 0).toString());
             txtMedName.setText(model.getValueAt(Myindex, 1).toString());
             txtMedUnit.setText(model.getValueAt(Myindex, 2).toString());
-            Date dateE = new SimpleDateFormat("yyyy-MM-dd").parse(model.getValueAt(Myindex, 3).toString());
+            txtMedInventory.setText(model.getValueAt(Myindex, 3).toString());
+            Date dateE = new SimpleDateFormat("yyyy-MM-dd").parse(model.getValueAt(Myindex, 4).toString());
             dateExp.setDate(dateE);
-            String company = model.getValueAt(Myindex, 4).toString();
+            String company = model.getValueAt(Myindex, 5).toString();
             cbxCompany.setSelectedItem(company);
         } catch (ParseException ex) {
             Logger.getLogger(StartScreenAdmin.class.getName()).log(Level.SEVERE, null, ex);
@@ -1239,6 +1210,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         txtMedUnit.setText("");
         jdateCurrentMedi();
         cbxCompany.setSelectedIndex(0);
+        SelectMed();
     }//GEN-LAST:event_btnClearMedActionPerformed
 
     private void txtMedIDKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMedIDKeyTyped
@@ -1353,7 +1325,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
                 if (rs.next()) {
                     man_id = rs.getString("ManufactorID");
                 }
-                String sql = "update medicine set MedicineName='" + txtMedName.getText() + "', MedicineUnitPrice=" + txtMedUnit.getText() + ", MedicineInventory="+ txtMedInventory.getText()+", MedicineExpire='" + MyExp + "',ManufactorID='" + man_id + "' where MedicineID='" + txtMedID.getText() + "'";
+                String sql = "update medicine set MedicineName='" + txtMedName.getText() + "', MedicineUnitPrice=" + txtMedUnit.getText() + ", MedicineInventory=" + txtMedInventory.getText() + ", MedicineExpire='" + MyExp + "',ManufactorID='" + man_id + "' where MedicineID='" + txtMedID.getText() + "'";
                 excuteUpdate_Delete(sql);
                 JOptionPane.showMessageDialog(this, "Updated Success");
                 SelectMed();
@@ -1449,6 +1421,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         txtManuName.setText("");
         txtManuAdd.setText("");
         txtManuPhone.setText("");
+        SelectMan();
     }//GEN-LAST:event_btnClearManuActionPerformed
 
     private void btnDeleteEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteEmpActionPerformed
@@ -1476,6 +1449,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         txtEmpPwd.setText("");
         jdateCurrentEmp();
         cbxEmpType.setSelectedIndex(0);
+        SelectEmp();
     }//GEN-LAST:event_btnClearEmpActionPerformed
 
     private void btnClearCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearCusActionPerformed
@@ -1485,6 +1459,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         txtCusAdd.setText("");
         txtCusPhone.setText("");
         jdateCurrentCus();
+        SelectCus();
     }//GEN-LAST:event_btnClearCusActionPerformed
 
     private void btnDeleteCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteCusActionPerformed
@@ -1517,6 +1492,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
     private void btnClearBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClearBillActionPerformed
         // TODO add your handling code here:
         txtBillID.setText("");
+        SelectBill();
 //        txtEmID.setText("");
 //        txtCuID.setText("");
 //        txtRepoTotal.setText("");
@@ -1528,147 +1504,22 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         if (txtBillID.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Somthing has been empty!");
         } else {
-            try {
-                int bill_amount=0, med_amount=0, n=0;
-                getConnect();
-                String check_med = "select a.MedicineInventory, b.BillID from medicine a, bill_detail b where a.MedicineID=b.MedicineID";
-                excuteCheck(check_med);
-                check.setString(1, txtBillID.getText());
-                rs1 = check.executeQuery();
-                if(rs1.next()){
-                    med_amount = rs1.getInt("MedicineInventory");
-                }
-                String check_bill = "select Amount from bill_detail where BillID=?";               
-                excuteCheck(check_bill);
-                check.setString(1, txtBillID.getText());
-                rs2 = check.executeQuery();
-                if(rs2.next()){
-                    bill_amount = rs2.getInt("Amount");
-                }
-                String sql_del1 = "delete from bill where BillID='" + txtBillID.getText() + "'";
-                excuteUpdate_Delete(sql_del1);
-                String sql_del2 = "delete from bill where BillID='" + txtBillID.getText() + "'";
-                excuteUpdate_Delete(sql_del2); 
-                n = bill_amount + med_amount;
-                String sql_update = "update medicine set MedicineInventory ="+ n +"";
-                excuteUpdate_Delete(sql_update);
-                JOptionPane.showMessageDialog(this, "Delete success");
-                SelectBill();
-                SelectMed();
-            } catch (SQLException ex) {
-                Logger.getLogger(StartScreenAdmin.class.getName()).log(Level.SEVERE, null, ex);
-            }
+            delBill();
         }
         closeConnect();
         btnClearBillActionPerformed(evt);
     }//GEN-LAST:event_btnDeleteBillActionPerformed
 
-    private void btnUpdateBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateBillActionPerformed
-        // TODO add your handling code here:
-        EditBill ur = new EditBill();
-        ur.setVisible(true);
-        this.dispose();
-//        if (txtReportID.getText().equals("") || txtEmID.getText().equals("") || txtCuID.getText().equals("") || txtRepoTotal.getText().equals("") || txtHH.getText().equals("") || txtMM.getText().equals("") || txtSS.getText().equals("")) {
-//            JOptionPane.showMessageDialog(this, "Something has been empty!");
-//        } else {
-//            //String rp_date="";
-//            String hh = txtHH.getText();
-//            String mm = txtMM.getText();
-//            String ss = txtSS.getText();
-//            int a = Integer.valueOf(hh);
-//            int b = Integer.valueOf(mm);
-//            int c = Integer.valueOf(ss);
-//            //JOptionPane.showMessageDialog(this, rp_date);
-//            //report_date = new java.sql.Date(dateR.getTime());
-//            if ((a < 0) || (a >= 24) || (b < 0) || (b >= 60) || (c < 0) || (c >= 60)) {
-//                JOptionPane.showMessageDialog(this, "Time is wrong!");
-//            } else {
-//                getConnect();
-//                DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-//                dateR = dateReport.getDate();
-//                String date = df.format(dateR);
-//                if (a > 0 && a < 9) {
-//                    hh = "0" + hh;
-//                    String rp_date = date + " " + hh + ":" + mm + ":" + ss;
-//                    String sql = "update report set report_date='" + rp_date + "', nv_id=" + txtEmID.getText() + ", cus_id=" + txtCuID.getText() + ", total=" + txtRepoTotal.getText() + " where report_id=" + txtReportID.getText() + " ";
-//                    excuteUpdate_Delete(sql);
-//                    JOptionPane.showMessageDialog(this, "Updated Success");
-//                    SelectRepo();
-//                } else if (a >= 9 && a <= 23) {
-//                    String rp_date = date + " " + hh + ":" + mm + ":" + ss;
-//                    String sql = "update report set report_date='" + rp_date + "', nv_id=" + txtEmID.getText() + ", cus_id=" + txtCuID.getText() + ", total=" + txtRepoTotal.getText() + " where report_id=" + txtReportID.getText() + " ";
-//                    excuteUpdate_Delete(sql);
-//                    JOptionPane.showMessageDialog(this, "Updated Success");
-//                    SelectRepo();
-//                }
-//            }
-//        }
-//        closeConnect();
-    }//GEN-LAST:event_btnUpdateBillActionPerformed
-
     private void btnAddBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBillActionPerformed
-        // TODO add your handling code here:
-        AddBill ar = new AddBill();
-        ar.setVisible(true);
+        InputCus ic = new InputCus();
+        ic.setVisible(true);
         this.dispose();
-//        if (txtReportID.getText().equals("") || txtEmID.getText().equals("") || txtCuID.getText().equals("") || txtRepoTotal.getText().equals("")) {
-//            JOptionPane.showMessageDialog(this, "Something is empty!");
-//        } else {
-//            try {
-////                dateR = dateReport.getDate();
-////                report_date = new java.sql.Date(dateR.getTime());
-//                getConnect();
-//                String sql_add = "insert into report values (?,?,?,?,?)";
-//                String sql_check = "select * from report where report_id=?";
-//                excuteAdd(sql_add);
-//                excuteCheck(sql_check);
-//                check.setInt(1, Integer.valueOf(txtReportID.getText()));
-//                rs = check.executeQuery();
-//                if (rs.next()) {
-//                    JOptionPane.showMessageDialog(this, "Report have already!");
-//                } else {
-//                    add.setInt(1, Integer.valueOf(txtReportID.getText()));
-//                    add.setString(2, timeStamp);
-//                    add.setInt(3, Integer.valueOf(txtEmID.getText()));
-//                    add.setInt(4, Integer.valueOf(txtCuID.getText()));
-//                    add.setInt(5, Integer.valueOf(txtRepoTotal.getText()));
-//                    int row = add.executeUpdate();
-//                    JOptionPane.showMessageDialog(this, "Add successful!");
-//                    SelectRepo();
-//                }
-//            } catch (SQLException ex) {
-//                Logger.getLogger(StartScreenAdmin.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//        }
-//        closeConnect();
     }//GEN-LAST:event_btnAddBillActionPerformed
 
     private void tbBillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbBillMouseClicked
-
-        //        try {
-        //            // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel) tbBill.getModel();
         int Myindex = tbBill.getSelectedRow();
         txtBillID.setText(model.getValueAt(Myindex, 0).toString());
-        //            String dateR = model.getValueAt(Myindex, 1).toString();
-        //            String[] parts = dateR.split(" ");
-        //            String parts1 = parts[0];
-        //            String parts2 = parts[1];
-        //            String[] part = parts2.split(":");
-        //            String part1 = part[0];
-        //            String part2 = part[1];
-        //            String part3 = part[2];
-        //            Date date = new SimpleDateFormat("yyyy-MM-dd").parse(parts1);
-        //            dateReport.setDate(date);
-        //            txtHH.setText(part1);
-        //            txtMM.setText(part2);
-        //            txtSS.setText(part3);
-        //            txtEmID.setText(model.getValueAt(Myindex, 2).toString());
-        //            txtCuID.setText(model.getValueAt(Myindex, 3).toString());
-        //            txtRepoTotal.setText(model.getValueAt(Myindex, 4).toString());
-        //        } catch (ParseException ex) {
-        //            Logger.getLogger(StartScreenAdmin.class.getName()).log(Level.SEVERE, null, ex);
-        //        }
     }//GEN-LAST:event_tbBillMouseClicked
 
     private void txtBillIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBillIDKeyPressed
@@ -1712,7 +1563,12 @@ public class StartScreenAdmin extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Updated Success");
         }
     }//GEN-LAST:event_btnUpdateEmpActionPerformed
-
+    public void delBill() {
+        getConnect();
+        String sql = "delete from bill where BillID='" + txtBillID.getText() + "'";
+        excuteUpdate_Delete(sql);
+        closeConnect();
+    }
     private void btnAddEmpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddEmpActionPerformed
         // TODO add your handling code here:
         dateBi = dateEmpBirth.getDate();
@@ -1864,7 +1720,6 @@ public class StartScreenAdmin extends javax.swing.JFrame {
     private javax.swing.JButton btnDeleteMed;
     private javax.swing.JMenuItem btnExit;
     private javax.swing.JMenuItem btnSignOut;
-    private javax.swing.JButton btnUpdateBill;
     private javax.swing.JButton btnUpdateCus;
     private javax.swing.JButton btnUpdateEmp;
     private javax.swing.JButton btnUpdateManu;
@@ -1912,6 +1767,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
     private javax.swing.JMenu mAbout;
     private javax.swing.JMenu mSystem;
     private javax.swing.JMenuBar mbPharma;
+    private javax.swing.JPanel pnlBill;
     private javax.swing.JPanel pnlButtonCus;
     private javax.swing.JPanel pnlButtonEmp;
     private javax.swing.JPanel pnlButtonManu;
@@ -1925,14 +1781,13 @@ public class StartScreenAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel pnlManuInfo;
     private javax.swing.JPanel pnlManufactor;
     private javax.swing.JPanel pnlMedicine;
-    private javax.swing.JPanel pnlReport;
     private javax.swing.JTabbedPane tbAdmin;
     private javax.swing.JTable tbBill;
     private javax.swing.JTable tbCus;
     private javax.swing.JTable tbEmp;
     private javax.swing.JTable tbManu;
     private javax.swing.JTable tbMedi;
-    private javax.swing.JTextField txtBillID;
+    public static javax.swing.JTextField txtBillID;
     private javax.swing.JTextField txtCusAdd;
     private javax.swing.JTextField txtCusID;
     private javax.swing.JTextField txtCusName;

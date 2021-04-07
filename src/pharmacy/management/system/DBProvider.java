@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JTable;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -140,6 +142,12 @@ public class DBProvider {
         return insert_id;
     }
 
+    public static void dataTable(String sql, JTable tb) {
+        getConnect();
+        excuteSQL(sql);
+        tb.setModel(DbUtils.resultSetToTableModel((rs)));
+        closeConnect();
+    }
 //    public static int countId(int n) 
 //        getConnect();
 //

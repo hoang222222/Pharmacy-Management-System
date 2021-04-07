@@ -5,27 +5,52 @@
  */
 package pharmacy.management.system;
 
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import net.proteanit.sql.DbUtils;
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 import static pharmacy.management.system.DBProvider.add;
 import static pharmacy.management.system.DBProvider.check;
 import static pharmacy.management.system.DBProvider.closeConnect;
+import static pharmacy.management.system.DBProvider.conn;
 import static pharmacy.management.system.DBProvider.excuteAdd;
 import static pharmacy.management.system.DBProvider.excuteCheck;
 import static pharmacy.management.system.DBProvider.excuteGet;
+import static pharmacy.management.system.DBProvider.excuteSQL;
 import static pharmacy.management.system.DBProvider.get;
 import static pharmacy.management.system.DBProvider.getConnect;
 import static pharmacy.management.system.DBProvider.insertID;
-import static pharmacy.management.system.Signin.txtUsername;
 import static pharmacy.management.system.DBProvider.rs;
+import static pharmacy.management.system.Signin.txtUsername;
+import static pharmacy.management.system.DBProvider.rs2;
+import static pharmacy.management.system.InputCus.input_cus_phone;
+import static pharmacy.management.system.DBProvider.dataTable;
+import static pharmacy.management.system.DBProvider.excuteGet;
+import static pharmacy.management.system.DBProvider.excuteUpdate_Delete;
+import static pharmacy.management.system.DBProvider.get;
+import static pharmacy.management.system.DBProvider.getConnect;
+import static pharmacy.management.system.DBProvider.password_db;
+import static pharmacy.management.system.DBProvider.rs;
+import static pharmacy.management.system.DBProvider.url;
+import static pharmacy.management.system.DBProvider.username_db;
+import static pharmacy.management.system.InputCus.input_cus_name;
 
 /**
  *
@@ -33,7 +58,7 @@ import static pharmacy.management.system.DBProvider.rs;
  */
 public class AddBill extends javax.swing.JFrame {
 
-    public static List<Bill_Class> listBill;
+
     String username = txtUsername.getText();
     String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
 
@@ -41,19 +66,19 @@ public class AddBill extends javax.swing.JFrame {
     /**
      * Creates new form AddReport
      */
-    public AddBill() {
+    public AddBill() throws SQLException {
         initComponents();
         jdateCurrentReport();
-        txtBillID.disable();
         txtBillID.disable();
         txtDateBill.disable();
         txtHH.disable();
         txtMM.disable();
         txtSS.disable();
-        setBillID();
-        setEmpID();
         txtEmID.disable();
-        headerBill();
+        addIdtoBill();
+        setEmpID();
+        txtCuPhone.disable();
+        txtCuPhone.setText(input_cus_phone);
     }
 
     /**
@@ -88,10 +113,10 @@ public class AddBill extends javax.swing.JFrame {
         txtAmount = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        textAreaBill = new javax.swing.JTextArea();
         txtDateBill = new javax.swing.JTextField();
         btnPrintBill = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tbBill_detail = new javax.swing.JTable();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -107,6 +132,7 @@ public class AddBill extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Adding Bill");
         setBackground(new java.awt.Color(255, 255, 255));
+        setResizable(false);
 
         pnlReportInfo.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -183,14 +209,8 @@ public class AddBill extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGap(0, 405, Short.MAX_VALUE)
         );
-
-        textAreaBill.setEditable(false);
-        textAreaBill.setColumns(20);
-        textAreaBill.setFont(new java.awt.Font("Courier New", 0, 13)); // NOI18N
-        textAreaBill.setRows(5);
-        jScrollPane1.setViewportView(textAreaBill);
 
         btnPrintBill.setText("Print");
         btnPrintBill.addActionListener(new java.awt.event.ActionListener() {
@@ -199,14 +219,27 @@ public class AddBill extends javax.swing.JFrame {
             }
         });
 
+        tbBill_detail.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "MedicineName", "Amount"
+            }
+        ));
+        jScrollPane1.setViewportView(tbBill_detail);
+
         javax.swing.GroupLayout pnlReportInfoLayout = new javax.swing.GroupLayout(pnlReportInfo);
         pnlReportInfo.setLayout(pnlReportInfoLayout);
         pnlReportInfoLayout.setHorizontalGroup(
             pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlReportInfoLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlReportInfoLayout.createSequentialGroup()
-                        .addContainerGap()
                         .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlReportInfoLayout.createSequentialGroup()
                                 .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -239,29 +272,25 @@ public class AddBill extends javax.swing.JFrame {
                                     .addComponent(txtMedName, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
                                     .addComponent(txtCuPhone, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtEmID)
-                                    .addComponent(txtAmount)))))
-                    .addGroup(pnlReportInfoLayout.createSequentialGroup()
-                        .addGap(57, 57, 57)
+                                    .addComponent(txtAmount))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlReportInfoLayout.createSequentialGroup()
                         .addComponent(btnAddBill)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnPrintBill)
                         .addGap(10, 10, 10)
-                        .addComponent(btnCancelBill)))
-                .addGap(18, 18, 18)
+                        .addComponent(btnCancelBill)
+                        .addGap(59, 59, 59)))
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlReportInfoLayout.setVerticalGroup(
             pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(pnlReportInfoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlReportInfoLayout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
                     .addGroup(pnlReportInfoLayout.createSequentialGroup()
                         .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel31)
@@ -294,58 +323,91 @@ public class AddBill extends javax.swing.JFrame {
                         .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 120, Short.MAX_VALUE)
+                        .addGap(69, 69, 69)
                         .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAddBill)
                             .addComponent(btnCancelBill)
-                            .addComponent(btnPrintBill))
-                        .addGap(30, 30, 30))))
+                            .addComponent(btnPrintBill)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(pnlReportInfoLayout.createSequentialGroup()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlReportInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlReportInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(pnlReportInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(pnlReportInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-    public void headerBill() {
-        String titlebill = "              *********             " + "\n" + "\n" + "\t    PHARMACY BILL" + "\n\n" + "  Medicine Name              Amount\n" + "===================================\n";
-        textAreaBill.setText(titlebill);
-    }
+    private String cus_id;
+    private String emp_id;
 
-    public void setEmpID() {
-        try {
-            getConnect();
-            String sql = "select EmployeesID from employees where Username=?";
-            excuteCheck(sql);
-            check.setString(1, username);
-            rs = check.executeQuery();
-            if (rs.next()) {
-                txtEmID.setText(rs.getString("EmployeesID"));
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(AddBill.class.getName()).log(Level.SEVERE, null, ex);
+    public void getCusID() throws SQLException {
+        getConnect();
+        String sql = "select CustomerID from customer where CustomerPhone=?";
+        excuteCheck(sql);
+        check.setString(1, input_cus_phone);
+        rs = check.executeQuery();
+        if (rs.next()) {
+            cus_id = rs.getString("CustomerID");
         }
     }
 
-    public void setBillID() {
+    public void getEmpID() throws SQLException {
+        getConnect();
+        String sql = "select EmployeesID from employees where Username=?";
+        excuteCheck(sql);
+        check.setString(1, username);
+        rs = check.executeQuery();
+        if (rs.next()) {
+            emp_id = rs.getString("EmployeesID");
+        }
+    }
+
+    public void addIdtoBill() throws SQLException {
         getConnect();
         String sql = "SELECT BillID FROM bill ORDER BY BillID DESC LIMIT 1";
         String colname = "BillID";
         String type = "BIL";
         String bill_id = insertID(type, sql, colname);
         txtBillID.setText(bill_id);
+        getCusID();
+        getEmpID();
+        String sql_add = "insert into bill values (?,?,?,?,?)";
+        excuteAdd(sql_add);
+        add.setString(1, bill_id);
+        add.setString(2, timeStamp);
+        add.setString(3, emp_id);
+        add.setString(4, cus_id);
+        add.setInt(5, 0);
+        int row = add.executeUpdate();
         closeConnect();
+    }
+
+    public void setEmpID() throws SQLException {
+        getConnect();
+        String sql = "select EmployeesID from employees where Username=?";
+        excuteCheck(sql);
+        check.setString(1, username);
+        rs = check.executeQuery();
+        if (rs.next()) {
+            txtEmID.setText(rs.getString("EmployeesID"));
+        }
+    }
+
+    public void SelectBill() {
+        String sql = "select a.MedicineName, b.Amout from medicine a, bill_detail b where a.MedicineID=b.MedicineID and b.BillID='"+txtBillID.getText()+"'";
+        dataTable(sql, tbBill_detail);
     }
 
     public void jdateCurrentReport() {
@@ -397,64 +459,89 @@ public class AddBill extends javax.swing.JFrame {
     private void txtAmountActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtAmountActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtAmountActionPerformed
-    
-    private void btnAddBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBillActionPerformed
-        // TODO add your handling code here:
-        if (txtCuPhone.getText().equals("")) {
-            JOptionPane.showMessageDialog(this, "Customer Phone is null");
-        } else {
-            try {
-                getConnect();
-                String cus_name = "";
-                String sql_check = "select * from customer where CustomerPhone=?";
-                excuteCheck(sql_check);
-                check.setInt(1, Integer.valueOf(txtCuPhone.getText()));
-                rs = check.executeQuery();
-                if (rs.next()) {
-                    cus_name = rs.getString("CustomerName");
-                    textAreaBill.setText(textAreaBill.getText() + " " + txtMedName.getText() + "                        " + txtAmount.getText() + "\n");
-                    String time = txtDateBill.getText() + " " + txtHH.getText() + ":" + txtHH.getText() + ":" + txtSS.getText();
-                    Bill_Class bill = new Bill_Class();
-                    bill.setBillID(txtBillID.getText());
-                    bill.setBillDate(time);
-                    bill.setCusName(cus_name);
-                    bill.setCusPhone(txtCuPhone.getText());
-                    bill.setMedName(txtMedName.getText());
-                    bill.setAmount(Integer.valueOf(txtAmount.getText()));
-                    bill.setEmpID(txtEmID.getText());
-                    listBill.add(bill);
 
-                } else {
-                    int n = JOptionPane.showConfirmDialog(this, "This is new customer.", "Warning", JOptionPane.YES_NO_OPTION);
-                    if (n == JOptionPane.YES_OPTION) {
-                    }
-                    JOptionPane.showMessageDialog(this, "This is a new customer!");
-                    InputCusName ip = new InputCusName();
-                    ip.setVisible(true);
+    public void updateMed() throws SQLException {
+        getConnect();
+        int having, update;
+        String sql_check = "select MedicineInventory from medicine where MedicineName=?";
+        excuteCheck(sql_check);
+        check.setString(1, txtMedName.getText());
+        rs = check.executeQuery();
+        if (rs.next()) {
+            having = rs.getInt("MedicineInventory");
+            update = having - Integer.valueOf(txtAmount.getText());
+            String sql = "update medicine set MedicineInventory=" + update + " where MedicineName='" + txtMedName.getText() + "'";
+            excuteUpdate_Delete(sql);
+        }
+        closeConnect();
+    }
 
-//                    String sql = "SELECT CustomerID FROM customer ORDER BY CustomerID DESC LIMIT 1";
-//                    String colname = "CustomerID";
-//                    String type = "CUS";
-//                    String cus_id = insertID(type, sql, colname);
-//                    String sql_add = "insert into customer (CustomerID,CustomerName,CustomerPhone) values (?,?,?)";
-//                    excuteAdd(sql_add);
-//                    add.setString(1, cus_id);
-//                    add.setString(2, );
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(AddBill.class.getName()).log(Level.SEVERE, null, ex);
+    public void updateTotalBill() throws SQLException {
+        getConnect();
+        int price = 0, money = 0, having = 0, update = 0;
+        String sql_check = "select MedicineUnitPrice from medicine where MedicineName=?";
+        excuteCheck(sql_check);
+        check.setString(1, txtMedName.getText());
+        rs = check.executeQuery();
+        if (rs.next()) {
+            price = rs.getInt("MedicineUnitPrice");
+            money = price * Integer.valueOf(txtAmount.getText());
+            String sql_get = "select BillTotal from bill where BillID=?";
+            excuteGet(sql_get);
+            get.setString(1, txtBillID.getText());
+            rs2 = get.executeQuery();
+            if (rs2.next()) {
+                having = rs2.getInt("BillTotal");
+                update = having + money;
+                String sql = "update bill set BillTotal=" + update + " where BillID='" + txtBillID.getText() + "'";
+                excuteUpdate_Delete(sql);
             }
+        }
+        closeConnect();
+    }
+    private void btnAddBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBillActionPerformed
+        try {
+            // TODO add your handling code here:
+            String med_id = "";
+            getConnect();
+            String sql_check = "select MedicineID from medicine where MedicineName=?";
+            excuteCheck(sql_check);
+            check.setString(1, txtMedName.getText());
+            rs = check.executeQuery();
+            if (rs.next()) {
+                med_id = rs.getString("MedicineID");
+                String sql_add = "insert into bill_detail values (?,?,?)";
+                excuteAdd(sql_add);
+                add.setString(1, txtBillID.getText());
+                add.setString(2, med_id);
+                add.setString(3, txtAmount.getText());
+                int row = add.executeUpdate();
+                updateMed();
+                updateTotalBill();
+                JOptionPane.showMessageDialog(this, "Add bill success");
+                SelectBill();
+            } else {
+                JOptionPane.showMessageDialog(this, "Medicine doesn't exists");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AddBill.class.getName()).log(Level.SEVERE, null, ex);
         }
         closeConnect();
         txtMedName.setText("");
         txtAmount.setText("");
     }//GEN-LAST:event_btnAddBillActionPerformed
-
+    public void delBill(){
+        getConnect();
+        String sql = "delete from bill where BillID='" + txtBillID.getText() + "'";
+        excuteUpdate_Delete(sql);
+        closeConnect();
+    }
     private void btnCancelBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelBillActionPerformed
         try {
             // TODO add your handling code here:
             String tmp = "";
             getConnect();
+            delBill();
             String sql = "select EmployeesPosition from employees where Username=?";
             excuteGet(sql);
             get.setString(1, username);
@@ -481,12 +568,23 @@ public class AddBill extends javax.swing.JFrame {
     private void btnPrintBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintBillActionPerformed
         try {
             // TODO add your handling code here:
+            conn = DriverManager.getConnection(url, username_db, password_db);
             JasperDesign jd = JRXmlLoader.load("E:\\PharmacyManagementSystem\\src\\reports\\report_bill.jrxml");
+            String sql = "select a.BillID, a.BillDate, c.CustomerName , e.MedicineName, e.MedicineUnitPrice, b.Amout, (e.MedicineUnitPrice*b.Amout) as Money, d.EmployeesID from pharmacydb.bill a, pharmacydb.bill_detail  b, pharmacydb.customer c, pharmacydb.employees d, pharmacydb.medicine e where a.BillID=b.BillID and a.CustomerID=c.CustomerID and a.EmployeesID=d.EmployeesID and b.MedicineID=e.MedicineID and a.BillID='"+txtBillID.getText()+"'";
+            JRDesignQuery query = new JRDesignQuery();
+            query.setText(sql);
+            jd.setQuery(query);
             
-        } catch (JRException ex) {
+            HashMap<String, Object> para = new HashMap<>();
+            para.put("BillID",txtBillID.getText());
+            
+            JasperReport js = JasperCompileManager.compileReport(jd);
+            JasperPrint jp = JasperFillManager.fillReport(js, para, conn);
+            JasperViewer.viewReport(jp);
+        } catch (JRException | SQLException ex) {
             Logger.getLogger(AddBill.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_btnPrintBillActionPerformed
 
     /**
@@ -526,7 +624,11 @@ public class AddBill extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new AddBill().setVisible(true);
+                try {
+                    new AddBill().setVisible(true);
+                } catch (SQLException ex) {
+                    Logger.getLogger(AddBill.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
@@ -549,7 +651,7 @@ public class AddBill extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSplitPane jSplitPane1;
     private javax.swing.JPanel pnlReportInfo;
-    private javax.swing.JTextArea textAreaBill;
+    private javax.swing.JTable tbBill_detail;
     private javax.swing.JTextField txtAmount;
     private javax.swing.JTextField txtBillID;
     private javax.swing.JTextField txtCuPhone;
