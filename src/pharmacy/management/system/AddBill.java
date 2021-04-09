@@ -17,6 +17,7 @@ import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import net.proteanit.sql.DbUtils;
+import java.sql.Timestamp;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
@@ -58,9 +59,10 @@ import static pharmacy.management.system.InputCus.input_cus_name;
  */
 public class AddBill extends javax.swing.JFrame {
 
-
     String username = txtUsername.getText();
-    String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
+    private long now = System.currentTimeMillis();
+    private Timestamp sqlTimestamp = new Timestamp(now);
+    //String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
 
     //String titlebill ="              *********             " +"\n"+"\n"+"\t    PHARMACY BILL"+"\n\n"+"  Medicine Name              Amount\n"+"===================================\n";
     /**
@@ -68,12 +70,9 @@ public class AddBill extends javax.swing.JFrame {
      */
     public AddBill() throws SQLException {
         initComponents();
-        jdateCurrentReport();
+        jdateCurrentBill();
+        dateBill.disable();
         txtBillID.disable();
-        txtDateBill.disable();
-        txtHH.disable();
-        txtMM.disable();
-        txtSS.disable();
         txtEmID.disable();
         addIdtoBill();
         setEmpID();
@@ -100,12 +99,6 @@ public class AddBill extends javax.swing.JFrame {
         txtEmID = new javax.swing.JTextField();
         jLabel34 = new javax.swing.JLabel();
         txtCuPhone = new javax.swing.JTextField();
-        jLabel36 = new javax.swing.JLabel();
-        txtHH = new javax.swing.JTextField();
-        jLabel37 = new javax.swing.JLabel();
-        txtMM = new javax.swing.JTextField();
-        jLabel38 = new javax.swing.JLabel();
-        txtSS = new javax.swing.JTextField();
         btnAddBill = new javax.swing.JButton();
         btnCancelBill = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -113,10 +106,10 @@ public class AddBill extends javax.swing.JFrame {
         txtAmount = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        txtDateBill = new javax.swing.JTextField();
         btnPrintBill = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbBill_detail = new javax.swing.JTable();
+        dateBill = new com.toedter.calendar.JDateChooser();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -144,30 +137,6 @@ public class AddBill extends javax.swing.JFrame {
 
         jLabel34.setText("Customer Phone:");
 
-        jLabel36.setText("Time:");
-
-        txtHH.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtHHKeyTyped(evt);
-            }
-        });
-
-        jLabel37.setText("/");
-
-        txtMM.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtMMKeyTyped(evt);
-            }
-        });
-
-        jLabel38.setText("/");
-
-        txtSS.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtSSKeyTyped(evt);
-            }
-        });
-
         btnAddBill.setText("Add");
         btnAddBill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -193,6 +162,11 @@ public class AddBill extends javax.swing.JFrame {
         txtAmount.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtAmountActionPerformed(evt);
+            }
+        });
+        txtAmount.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtAmountKeyTyped(evt);
             }
         });
 
@@ -232,6 +206,8 @@ public class AddBill extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tbBill_detail);
 
+        dateBill.setDateFormatString("yyyy-MM-dd HH:mm:ss");
+
         javax.swing.GroupLayout pnlReportInfoLayout = new javax.swing.GroupLayout(pnlReportInfo);
         pnlReportInfo.setLayout(pnlReportInfoLayout);
         pnlReportInfoLayout.setHorizontalGroup(
@@ -242,25 +218,13 @@ public class AddBill extends javax.swing.JFrame {
                     .addGroup(pnlReportInfoLayout.createSequentialGroup()
                         .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlReportInfoLayout.createSequentialGroup()
-                                .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
-                                        .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                    .addComponent(jLabel36))
+                                .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
+                                    .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(43, 43, 43)
                                 .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(pnlReportInfoLayout.createSequentialGroup()
-                                        .addComponent(txtHH, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel37)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtMM, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel38)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(txtSS, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(txtBillID)
-                                    .addComponent(txtDateBill)))
+                                    .addComponent(dateBill, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)))
                             .addGroup(pnlReportInfoLayout.createSequentialGroup()
                                 .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -296,18 +260,10 @@ public class AddBill extends javax.swing.JFrame {
                             .addComponent(jLabel31)
                             .addComponent(txtBillID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
-                        .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel32)
-                            .addComponent(txtDateBill, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(21, 21, 21)
-                        .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel36)
-                            .addComponent(txtHH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel37)
-                            .addComponent(txtMM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel38)
-                            .addComponent(txtSS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                            .addComponent(dateBill, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(55, 55, 55)
                         .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel33)
                             .addComponent(txtEmID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -386,10 +342,10 @@ public class AddBill extends javax.swing.JFrame {
         String sql_add = "insert into bill values (?,?,?,?,?)";
         excuteAdd(sql_add);
         add.setString(1, bill_id);
-        add.setString(2, timeStamp);
+        add.setTimestamp(2, sqlTimestamp);
         add.setString(3, emp_id);
         add.setString(4, cus_id);
-        add.setInt(5, 0);
+        add.setDouble(5, 0);
         int row = add.executeUpdate();
         closeConnect();
     }
@@ -406,52 +362,13 @@ public class AddBill extends javax.swing.JFrame {
     }
 
     public void SelectBill() {
-        String sql = "select a.MedicineName, b.Amout from medicine a, bill_detail b where a.MedicineID=b.MedicineID and b.BillID='"+txtBillID.getText()+"'";
+        String sql = "select a.MedicineName, b.Amout from medicine a, bill_detail b where a.MedicineID=b.MedicineID and b.BillID='" + txtBillID.getText() + "'";
         dataTable(sql, tbBill_detail);
     }
-
-    public void jdateCurrentReport() {
-        String[] parts = timeStamp.split(" ");
-        String parts1 = parts[0];
-        String parts2 = parts[1];
-        //String date = new SimpleDateFormat("yyyy-MM-dd").parse(parts1).toString();
-        //String setdate = date.toString();
-        txtDateBill.setText(parts1);
-        String[] part = parts2.split(":");
-        String part1 = part[0];
-        String part2 = part[1];
-        String part3 = part[2];
-        txtHH.setText(part1);
-        txtMM.setText(part2);
-        txtSS.setText(part3);
+    
+    public void jdateCurrentBill() {
+        dateBill.setDate(sqlTimestamp);
     }
-    private void txtSSKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSSKeyTyped
-        // TODO add your handling code here:
-        char char_input = evt.getKeyChar();
-        if (!Character.isDigit(char_input) && (char_input != '\b')) {
-            JOptionPane.showMessageDialog(this, "Only Positive Numbers Allowed");
-            txtSS.requestFocus();
-        }
-    }//GEN-LAST:event_txtSSKeyTyped
-
-    private void txtMMKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMMKeyTyped
-        // TODO add your handling code here:
-        char char_input = evt.getKeyChar();
-        if (!Character.isDigit(char_input) && (char_input != '\b')) {
-            JOptionPane.showMessageDialog(this, "Only Positive Numbers Allowed");
-            txtMM.requestFocus();
-        }
-    }//GEN-LAST:event_txtMMKeyTyped
-
-    private void txtHHKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtHHKeyTyped
-        // TODO add your handling code here:
-        char char_input = evt.getKeyChar();
-        if (!Character.isDigit(char_input) && (char_input != '\b')) {
-            JOptionPane.showMessageDialog(this, "Only Positive Numbers Allowed");
-            txtHH.requestFocus();
-        }
-    }//GEN-LAST:event_txtHHKeyTyped
-
     private void txtMedNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMedNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMedNameActionPerformed
@@ -478,7 +395,8 @@ public class AddBill extends javax.swing.JFrame {
 
     public void updateTotalBill() throws SQLException {
         getConnect();
-        int price = 0, money = 0, having = 0, update = 0;
+        int price = 0, money = 0;
+        double having = 0, update = 0;
         String sql_check = "select MedicineUnitPrice from medicine where MedicineName=?";
         excuteCheck(sql_check);
         check.setString(1, txtMedName.getText());
@@ -491,7 +409,7 @@ public class AddBill extends javax.swing.JFrame {
             get.setString(1, txtBillID.getText());
             rs2 = get.executeQuery();
             if (rs2.next()) {
-                having = rs2.getInt("BillTotal");
+                having = rs2.getDouble("BillTotal");
                 update = having + money;
                 String sql = "update bill set BillTotal=" + update + " where BillID='" + txtBillID.getText() + "'";
                 excuteUpdate_Delete(sql);
@@ -530,7 +448,7 @@ public class AddBill extends javax.swing.JFrame {
         txtMedName.setText("");
         txtAmount.setText("");
     }//GEN-LAST:event_btnAddBillActionPerformed
-    public void delBill(){
+    public void delBill() {
         getConnect();
         String sql = "delete from bill where BillID='" + txtBillID.getText() + "'";
         excuteUpdate_Delete(sql);
@@ -566,26 +484,35 @@ public class AddBill extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCancelBillActionPerformed
 
     private void btnPrintBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintBillActionPerformed
-        try {
-            // TODO add your handling code here:
-            conn = DriverManager.getConnection(url, username_db, password_db);
-            JasperDesign jd = JRXmlLoader.load("E:\\PharmacyManagementSystem\\src\\reports\\report_bill.jrxml");
-            String sql = "select a.BillID, a.BillDate, c.CustomerName , e.MedicineName, e.MedicineUnitPrice, b.Amout, (e.MedicineUnitPrice*b.Amout) as Money, d.EmployeesID from pharmacydb.bill a, pharmacydb.bill_detail  b, pharmacydb.customer c, pharmacydb.employees d, pharmacydb.medicine e where a.BillID=b.BillID and a.CustomerID=c.CustomerID and a.EmployeesID=d.EmployeesID and b.MedicineID=e.MedicineID and a.BillID='"+txtBillID.getText()+"'";
-            JRDesignQuery query = new JRDesignQuery();
-            query.setText(sql);
-            jd.setQuery(query);
-            
-            HashMap<String, Object> para = new HashMap<>();
-            para.put("BillID",txtBillID.getText());
-            
-            JasperReport js = JasperCompileManager.compileReport(jd);
-            JasperPrint jp = JasperFillManager.fillReport(js, para, conn);
-            JasperViewer.viewReport(jp);
-        } catch (JRException | SQLException ex) {
-            Logger.getLogger(AddBill.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        try {
+//            // TODO add your handling code here:
+//            conn = DriverManager.getConnection(url, username_db, password_db);
+//            JasperDesign jd = JRXmlLoader.load("E:\\PharmacyManagementSystem\\src\\reports\\report_bill.jrxml");
+//            String sql = "select a.BillID, a.BillDate, c.CustomerName , e.MedicineName, e.MedicineUnitPrice, b.Amout, (e.MedicineUnitPrice*b.Amout) as Money, d.EmployeesID from pharmacydb.bill a, pharmacydb.bill_detail  b, pharmacydb.customer c, pharmacydb.employees d, pharmacydb.medicine e where a.BillID=b.BillID and a.CustomerID=c.CustomerID and a.EmployeesID=d.EmployeesID and b.MedicineID=e.MedicineID and a.BillID='" + txtBillID.getText() + "'";
+//            JRDesignQuery query = new JRDesignQuery();
+//            query.setText(sql);
+//            jd.setQuery(query);
+//
+//            HashMap<String, Object> para = new HashMap<>();
+//            para.put("BillID", txtBillID.getText());
+//
+//            JasperReport js = JasperCompileManager.compileReport(jd);
+//            JasperPrint jp = JasperFillManager.fillReport(js, para, conn);
+//            JasperViewer.viewReport(jp);
+//        } catch (JRException | SQLException ex) {
+//            Logger.getLogger(AddBill.class.getName()).log(Level.SEVERE, null, ex);
+//        }
 
     }//GEN-LAST:event_btnPrintBillActionPerformed
+
+    private void txtAmountKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtAmountKeyTyped
+        // TODO add your handling code here:
+        char char_input = evt.getKeyChar();
+        if (!Character.isDigit(char_input) && (char_input != '\b')) {
+            JOptionPane.showMessageDialog(this, "Only Positive Numbers Allowed");
+            txtAmount.requestFocus();
+        }
+    }//GEN-LAST:event_txtAmountKeyTyped
 
     /**
      * @param args the command line arguments
@@ -637,15 +564,13 @@ public class AddBill extends javax.swing.JFrame {
     private javax.swing.JButton btnAddBill;
     private javax.swing.JButton btnCancelBill;
     private javax.swing.JButton btnPrintBill;
+    private com.toedter.calendar.JDateChooser dateBill;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
-    private javax.swing.JLabel jLabel36;
-    private javax.swing.JLabel jLabel37;
-    private javax.swing.JLabel jLabel38;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -655,11 +580,7 @@ public class AddBill extends javax.swing.JFrame {
     private javax.swing.JTextField txtAmount;
     private javax.swing.JTextField txtBillID;
     private javax.swing.JTextField txtCuPhone;
-    private javax.swing.JTextField txtDateBill;
     private javax.swing.JTextField txtEmID;
-    private javax.swing.JTextField txtHH;
-    private javax.swing.JTextField txtMM;
     private javax.swing.JTextField txtMedName;
-    private javax.swing.JTextField txtSS;
     // End of variables declaration//GEN-END:variables
 }

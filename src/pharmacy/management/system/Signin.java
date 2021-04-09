@@ -215,13 +215,15 @@ public class Signin extends javax.swing.JFrame {
                 ResultSet rs = ps.executeQuery();
                 if (rs.next()) {
                     //String name = rs.getString("full_name");
-                    JOptionPane.showMessageDialog(this, "Login successful!");
+                    
                     String pos = rs.getString("EmployeesPosition");
                     if (pos.equals("admin") == true) {
+                        JOptionPane.showMessageDialog(this, "Login successful! You are signing with an administrator account");
                         StartScreenAdmin ad = new StartScreenAdmin();
                         ad.setVisible(true);
                         this.dispose();
                     } else {
+                        JOptionPane.showMessageDialog(this, "Login successful!");
                         StartScreenUser us = new StartScreenUser();
                         us.setVisible(true);
                         this.dispose();

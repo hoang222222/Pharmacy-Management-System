@@ -10,12 +10,11 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.sql.Time;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import net.proteanit.sql.DbUtils;
 import static pharmacy.management.system.DBProvider.add;
 import static pharmacy.management.system.DBProvider.check;
 import static pharmacy.management.system.DBProvider.closeConnect;
@@ -27,7 +26,6 @@ import static pharmacy.management.system.DBProvider.excuteSQL;
 import static pharmacy.management.system.DBProvider.excuteUpdate_Delete;
 import static pharmacy.management.system.DBProvider.get;
 import static pharmacy.management.system.DBProvider.getConnect;
-import static pharmacy.management.system.DBProvider.getLastID;
 import static pharmacy.management.system.DBProvider.insertID;
 import static pharmacy.management.system.DBProvider.rs;
 import static pharmacy.management.system.DBProvider.rs1;
@@ -47,7 +45,8 @@ public class StartScreenUser extends javax.swing.JFrame {
         SelectMed();
         SelectCus();
         SelectMan();
-        SelectBill();
+        //SelectBill();
+        SelectTbGetBill();
         cbxCpndata();
         jdateCurrentMedi();
         jdateCurrentCus();
@@ -140,6 +139,8 @@ public class StartScreenUser extends javax.swing.JFrame {
         btnReset = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         tbBill = new javax.swing.JTable();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        tbgetBill = new javax.swing.JTable();
         mbPharma = new javax.swing.JMenuBar();
         mSystem = new javax.swing.JMenu();
         btnSignOut = new javax.swing.JMenuItem();
@@ -147,6 +148,7 @@ public class StartScreenUser extends javax.swing.JFrame {
         mUser = new javax.swing.JMenu();
         btnUserInfo = new javax.swing.JMenuItem();
         btnChangePassword = new javax.swing.JMenuItem();
+        mStatistics = new javax.swing.JMenu();
         mAbout = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -323,14 +325,12 @@ public class StartScreenUser extends javax.swing.JFrame {
                 .addComponent(headingCus, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                 .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlCustomerLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(pnlCustomerLayout.createSequentialGroup()
                         .addComponent(pnlCusInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(pnlButtonCus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(47, 47, 47))))
+                        .addComponent(pnlButtonCus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
         );
 
         tpPharma.addTab("Customer", pnlCustomer);
@@ -404,6 +404,12 @@ public class StartScreenUser extends javax.swing.JFrame {
         jLabel8.setText("Company:");
 
         jLabel4.setText("Inventory:");
+
+        txtMedInventory.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtMedInventoryKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlInforMedLayout = new javax.swing.GroupLayout(pnlInforMed);
         pnlInforMed.setLayout(pnlInforMedLayout);
@@ -738,6 +744,24 @@ public class StartScreenUser extends javax.swing.JFrame {
         });
         jScrollPane5.setViewportView(tbBill);
 
+        tbgetBill.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tbgetBill.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tbgetBillMouseClicked(evt);
+            }
+        });
+        jScrollPane4.setViewportView(tbgetBill);
+
         javax.swing.GroupLayout pnlBillLayout = new javax.swing.GroupLayout(pnlBill);
         pnlBill.setLayout(pnlBillLayout);
         pnlBillLayout.setHorizontalGroup(
@@ -747,12 +771,13 @@ public class StartScreenUser extends javax.swing.JFrame {
                 .addGroup(pnlBillLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlBillLayout.createSequentialGroup()
-                        .addGap(0, 5, Short.MAX_VALUE)
-                        .addComponent(pnlReportInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(139, 139, 139)
-                        .addComponent(pnlButtonReport, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(199, 199, 199))
-                    .addComponent(jScrollPane5))
+                        .addGap(25, 25, 25)
+                        .addGroup(pnlBillLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(pnlReportInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(pnlButtonReport, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addContainerGap())
         );
         pnlBillLayout.setVerticalGroup(
@@ -760,12 +785,17 @@ public class StartScreenUser extends javax.swing.JFrame {
             .addGroup(pnlBillLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addGroup(pnlBillLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlReportInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(pnlButtonReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlBillLayout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(pnlReportInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(pnlButtonReport, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlBillLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(17, Short.MAX_VALUE))
         );
 
@@ -814,6 +844,14 @@ public class StartScreenUser extends javax.swing.JFrame {
 
         mbPharma.add(mUser);
 
+        mStatistics.setText("Statistics");
+        mStatistics.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                mStatisticsMouseClicked(evt);
+            }
+        });
+        mbPharma.add(mStatistics);
+
         mAbout.setText("About ");
         mAbout.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -858,11 +896,15 @@ public class StartScreenUser extends javax.swing.JFrame {
         String sql = "select * from manufactor";
         dataTable(sql, tbManu);
     }
-
-    public void SelectBill() {
-        String sql = "select a.BillID, a.BillDate, c.CustomerName , e.MedicineName, e.MedicineUnitPrice, b.Amout, (e.MedicineUnitPrice*b.Amout) as Money, d.EmployeesID from pharmacydb.bill a, pharmacydb.bill_detail  b, pharmacydb.customer c, pharmacydb.employees d, pharmacydb.medicine e where a.BillID=b.BillID and a.CustomerID=c.CustomerID and a.EmployeesID=d.EmployeesID and b.MedicineID=e.MedicineID";
-        dataTable(sql, tbBill);
+    
+    public void SelectTbGetBill() {
+        String sql = "select * from bill";
+        dataTable(sql, tbgetBill);
     }
+//    public void SelectBill() {
+//        String sql = "select a.BillID, a.BillDate, c.CustomerName , e.MedicineName, e.MedicineUnitPrice, b.Amout, (e.MedicineUnitPrice*b.Amout) as Money, d.EmployeesID from pharmacydb.bill a, pharmacydb.bill_detail  b, pharmacydb.customer c, pharmacydb.employees d, pharmacydb.medicine e where a.BillID=b.BillID and a.CustomerID=c.CustomerID and a.EmployeesID=d.EmployeesID and b.MedicineID=e.MedicineID";
+//        dataTable(sql, tbBill);
+//    }
 
     public void jdateCurrentMedi() {
         long millis = System.currentTimeMillis();
@@ -877,10 +919,8 @@ public class StartScreenUser extends javax.swing.JFrame {
         java.sql.Date date = new java.sql.Date(millis);
         dateCusBirth.setDate(date);
     }
+    
     String timeStamp = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(Calendar.getInstance().getTime());
-
-
-
     public void cbxCpndata() {
         try {
             getConnect();
@@ -960,9 +1000,10 @@ public class StartScreenUser extends javax.swing.JFrame {
                     try {
                         add.setString(1, med_id);
                         add.setString(2, txtMedName.getText());
-                        add.setInt(3, Integer.valueOf(txtMedUnit.getText()));
-                        add.setDate(4, MyExp);
-                        add.setString(5, man_id);
+                        add.setDouble(3, Double.valueOf(txtMedUnit.getText()));
+                        add.setInt(4, Integer.valueOf(txtMedInventory.getText()));
+                        add.setDate(5, MyExp);
+                        add.setString(6, man_id);
                         int row = add.executeUpdate();
                         JOptionPane.showMessageDialog(this, "Add successful!");
                         SelectMed();
@@ -1295,8 +1336,36 @@ public class StartScreenUser extends javax.swing.JFrame {
     private void btnResetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResetActionPerformed
         // TODO add your handling code here:
         txtBillID.setText("");
-        SelectBill();
+        //SelectBill();
+        SelectTbGetBill();
     }//GEN-LAST:event_btnResetActionPerformed
+
+    private void tbgetBillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbgetBillMouseClicked
+         // TODO add your handling code here:
+          DefaultTableModel model = (DefaultTableModel) tbgetBill.getModel();
+        int Myindex = tbgetBill.getSelectedRow();
+        String idbill = model.getValueAt(Myindex, 0).toString();
+        txtBillID.setText(idbill);
+        String sql = "select a.BillID, a.BillDate, c.CustomerName , e.MedicineName, e.MedicineUnitPrice, b.Amout, (e.MedicineUnitPrice*b.Amout) as Money, d.EmployeesID from pharmacydb.bill a, pharmacydb.bill_detail  b, pharmacydb.customer c, pharmacydb.employees d, pharmacydb.medicine e where a.CustomerID=c.CustomerID and a.EmployeesID=d.EmployeesID and b.MedicineID=e.MedicineID and a.BillID=b.BillID and a.BillID='"+idbill+"'";
+        dataTable(sql, tbBill);
+    }//GEN-LAST:event_tbgetBillMouseClicked
+
+    private void txtMedInventoryKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMedInventoryKeyTyped
+         // TODO add your handling code here:
+         char char_input = evt.getKeyChar();
+        if (!Character.isDigit(char_input) && (char_input != '\b')) {
+            JOptionPane.showMessageDialog(this, "Only Positive Numbers Allowed");
+            txtMedInventory.requestFocus();
+        }
+    }//GEN-LAST:event_txtMedInventoryKeyTyped
+
+    private void mStatisticsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mStatisticsMouseClicked
+
+            // TODO add your handling code here:
+            Statistics st = new Statistics();
+            st.setVisible(true);
+            //this.dispose();
+    }//GEN-LAST:event_mStatisticsMouseClicked
 
     /**
      * @param args the command line arguments
@@ -1378,8 +1447,10 @@ public class StartScreenUser extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JMenu mAbout;
+    private javax.swing.JMenu mStatistics;
     private javax.swing.JMenu mSystem;
     private javax.swing.JMenu mUser;
     private javax.swing.JMenuBar mbPharma;
@@ -1399,6 +1470,7 @@ public class StartScreenUser extends javax.swing.JFrame {
     private javax.swing.JTable tbCus;
     private javax.swing.JTable tbManu;
     private javax.swing.JTable tbMedi;
+    private javax.swing.JTable tbgetBill;
     public static javax.swing.JTabbedPane tpPharma;
     private javax.swing.JTextField txtBillID;
     private javax.swing.JTextField txtCusAdd;
