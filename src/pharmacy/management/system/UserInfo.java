@@ -89,23 +89,18 @@ public class UserInfo extends javax.swing.JFrame {
         });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 153, 102));
         jLabel3.setText("User name:");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 153, 102));
         jLabel4.setText("Full name:");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 153, 102));
         jLabel5.setText("Phone:");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 153, 102));
         jLabel6.setText("Address:");
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 2, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 153, 102));
         jLabel7.setText("Birthday:");
 
         dateBirth.setDateFormatString("yyyy-MM-dd");

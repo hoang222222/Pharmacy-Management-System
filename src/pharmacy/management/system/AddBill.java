@@ -137,7 +137,7 @@ public class AddBill extends javax.swing.JFrame {
 
         jLabel34.setText("Customer Phone:");
 
-        btnAddBill.setText("Add");
+        btnAddBill.setText("Add Medicine");
         btnAddBill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAddBillActionPerformed(evt);
@@ -213,9 +213,9 @@ public class AddBill extends javax.swing.JFrame {
         pnlReportInfoLayout.setHorizontalGroup(
             pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlReportInfoLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlReportInfoLayout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlReportInfoLayout.createSequentialGroup()
                                 .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
@@ -236,15 +236,15 @@ public class AddBill extends javax.swing.JFrame {
                                     .addComponent(txtMedName, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
                                     .addComponent(txtCuPhone, javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(txtEmID)
-                                    .addComponent(txtAmount))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlReportInfoLayout.createSequentialGroup()
+                                    .addComponent(txtAmount)))))
+                    .addGroup(pnlReportInfoLayout.createSequentialGroup()
+                        .addGap(35, 35, 35)
                         .addComponent(btnAddBill)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnPrintBill)
                         .addGap(10, 10, 10)
-                        .addComponent(btnCancelBill)
-                        .addGap(59, 59, 59)))
+                        .addComponent(btnCancelBill)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 315, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -263,7 +263,7 @@ public class AddBill extends javax.swing.JFrame {
                         .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel32)
                             .addComponent(dateBill, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(55, 55, 55)
+                        .addGap(18, 18, 18)
                         .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel33)
                             .addComponent(txtEmID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -279,7 +279,7 @@ public class AddBill extends javax.swing.JFrame {
                         .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel2))
-                        .addGap(69, 69, 69)
+                        .addGap(57, 57, 57)
                         .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnAddBill)
                             .addComponent(btnCancelBill)

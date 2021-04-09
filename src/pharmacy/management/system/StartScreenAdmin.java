@@ -177,8 +177,8 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         mSystem = new javax.swing.JMenu();
         btnSignOut = new javax.swing.JMenuItem();
         btnExit = new javax.swing.JMenuItem();
+        jMenu1 = new javax.swing.JMenu();
         mAbout = new javax.swing.JMenu();
-        mStatistic = new javax.swing.JMenu();
 
         jButton2.setText("jButton2");
 
@@ -915,13 +915,13 @@ public class StartScreenAdmin extends javax.swing.JFrame {
 
         tbBill.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "BillID", "BillDate", "CustomerName", "MedicineName", "MedicineUnitPrice", "Amount", "Money", "EmlpoyeesID"
             }
         ));
         tbBill.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -1042,6 +1042,14 @@ public class StartScreenAdmin extends javax.swing.JFrame {
 
         mbPharma.add(mSystem);
 
+        jMenu1.setText("Statistics");
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu1MouseClicked(evt);
+            }
+        });
+        mbPharma.add(jMenu1);
+
         mAbout.setText("About ");
         mAbout.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1054,14 +1062,6 @@ public class StartScreenAdmin extends javax.swing.JFrame {
             }
         });
         mbPharma.add(mAbout);
-
-        mStatistic.setText("Statistics");
-        mStatistic.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                mStatisticMouseClicked(evt);
-            }
-        });
-        mbPharma.add(mStatistic);
 
         setJMenuBar(mbPharma);
 
@@ -1706,13 +1706,12 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtMedInventoryKeyTyped
 
-    private void mStatisticMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_mStatisticMouseClicked
-
-            // TODO add your handling code here:
-            Statistics st = new Statistics();
-            st.setVisible(true);
-            //this.dispose();
-    }//GEN-LAST:event_mStatisticMouseClicked
+    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
+         // TODO add your handling code here:
+         Statistics st = new Statistics();
+         st.setVisible(true);
+         //this.dispose();
+    }//GEN-LAST:event_jMenu1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -1805,6 +1804,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JMenu jMenu1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1813,7 +1813,6 @@ public class StartScreenAdmin extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JLabel lbMedicine;
     private javax.swing.JMenu mAbout;
-    private javax.swing.JMenu mStatistic;
     private javax.swing.JMenu mSystem;
     private javax.swing.JMenuBar mbPharma;
     private javax.swing.JPanel pnlBill;
