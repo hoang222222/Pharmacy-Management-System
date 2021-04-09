@@ -14,7 +14,7 @@ import static pharmacy.management.system.DBProvider.dataTable;
  * @author HOANG
  */
 public class Statistics extends javax.swing.JFrame {
-    java.sql.Date date1, date2;
+    java.sql.Timestamp date1, date2;
     private long now = System.currentTimeMillis();
     private Timestamp sqlTimestamp = new Timestamp(now);
     /**
@@ -46,6 +46,7 @@ public class Statistics extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Statistics");
 
         jDateChooser1.setDateFormatString("yyyy-MM-dd HH:mm:ss");
 
@@ -125,17 +126,18 @@ public class Statistics extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(44, 44, 44)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(5, 5, 5)
                                 .addComponent(btnByday)
-                                .addGap(8, 8, 8)
-                                .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(8, 8, 8))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
-                                .addGap(44, 44, 44)
-                                .addComponent(jLabel2)))))
+                                .addGap(44, 44, 44)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -147,19 +149,19 @@ public class Statistics extends javax.swing.JFrame {
     
     public void date1(){
         Date date_start = jDateChooser1.getDate();                
-        date1 = new java.sql.Date(date_start.getTime());        
+        date1 = new java.sql.Timestamp(date_start.getTime());        
     }
     public void date2(){
         Date date_end = jDateChooser2.getDate();
-        date2 = new java.sql.Date(date_end.getTime());
+        date2 = new java.sql.Timestamp(date_end.getTime());
     }
     private void btnBydayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBydayActionPerformed
         // TODO add your handling code here:
         date1();
         date2();
-        String sql = "select a.MedicineID, a.MedicineName, sum(b.Amout) as `Selled`, c.EmployeesID from medicine a, bill_detail b, bill c where a.MedicineID=b.MedicineID and b.BillID=c.BillID and c.BillDate>='"+date1+"' and c.BillDate<='"+date2+"'";
+        String sql = "select a.MedicineID, a.MedicineName, sum(b.Amout) as `Selled`, a.MedicineInventory from medicine a, bill_detail b, bill c where a.MedicineID=b.MedicineID and b.BillID=c.BillID and c.BillDate between '"+date1+"' and '"+date2+"' group by a.MedicineID";
         dataTable(sql, jTable2);
-        String sql2 = "select count(BillID) as `Number of Bill`, sum(BillTotal) as `Total` from bill where BillDate>='"+date1+"' and BillDate<='"+date2+"'";
+        String sql2 = "select BillID, BillTotal from bill where BillDate between '"+date1+"' and '"+date2+"'";
         dataTable(sql2, jTable1);
     }//GEN-LAST:event_btnBydayActionPerformed
 
