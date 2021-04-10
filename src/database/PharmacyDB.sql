@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 07, 2021 lúc 08:13 PM
+-- Thời gian đã tạo: Th4 10, 2021 lúc 09:14 AM
 -- Phiên bản máy phục vụ: 10.4.17-MariaDB
 -- Phiên bản PHP: 8.0.2
 
@@ -29,10 +29,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `bill` (
   `BillID` varchar(10) NOT NULL,
-  `BillDate` varchar(25) NOT NULL,
+  `BillDate` datetime NOT NULL,
   `EmployeesID` varchar(10) NOT NULL,
   `CustomerID` varchar(10) NOT NULL,
-  `BillTotal` int(100) DEFAULT NULL
+  `BillTotal` double DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -40,10 +40,17 @@ CREATE TABLE `bill` (
 --
 
 INSERT INTO `bill` (`BillID`, `BillDate`, `EmployeesID`, `CustomerID`, `BillTotal`) VALUES
-('BIL0000001', '2018-12-08 06:55:51', 'EMP0000004', 'CUS0000003', 7000000),
-('BIL0000002', '2018-05-06 05:20:00', 'EMP0000005', 'CUS0000002', 500000),
-('BIL0000003', '2021-04-07 22:27:02', 'EMP0000002', 'CUS0000001', 114805),
-('BIL0000004', '2021-04-07 23:06:43', 'EMP0000002', 'CUS0000001', 69070);
+('BIL0000001', '2016-06-25 07:30:18', 'EMP0000004', 'CUS0000003', 7000000),
+('BIL0000002', '2017-12-02 09:18:03', 'EMP0000005', 'CUS0000002', 500000),
+('BIL0000003', '2018-05-06 12:30:07', 'EMP0000002', 'CUS0000001', 114805),
+('BIL0000004', '2019-01-18 20:40:20', 'EMP0000002', 'CUS0000001', 69070),
+('BIL0000005', '2021-03-20 15:01:30', 'EMP0000001', 'CUS0000008', 11751964),
+('BIL0000006', '2021-04-09 22:26:14', 'EMP0000002', 'CUS0000008', 794305),
+('BIL0000007', '2021-04-09 23:00:30', 'EMP0000002', 'CUS0000008', 103605),
+('BIL0000008', '2021-04-09 23:04:15', 'EMP0000002', 'CUS0000003', 0),
+('BIL0000009', '2021-04-10 10:21:31', 'EMP0000001', 'CUS0000010', 0),
+('BIL0000010', '2021-04-10 12:07:46', 'EMP0000001', 'CUS0000014', 0),
+('BIL0000011', '2021-04-10 13:40:11', 'EMP0000001', 'CUS0000008', 149340);
 
 -- --------------------------------------------------------
 
@@ -54,7 +61,7 @@ INSERT INTO `bill` (`BillID`, `BillDate`, `EmployeesID`, `CustomerID`, `BillTota
 CREATE TABLE `bill_detail` (
   `BillID` varchar(10) NOT NULL,
   `MedicineID` varchar(10) NOT NULL,
-  `Amout` int(11) NOT NULL
+  `Amout` int(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -67,7 +74,12 @@ INSERT INTO `bill_detail` (`BillID`, `MedicineID`, `Amout`) VALUES
 ('BIL0000002', 'MED0000004', 7),
 ('BIL0000003', 'MED0000001', 2),
 ('BIL0000003', 'MED0000002', 3),
-('BIL0000004', 'MED0000002', 2);
+('BIL0000004', 'MED0000002', 2),
+('BIL0000005', 'MED0000003', 34),
+('BIL0000006', 'MED0000002', 23),
+('BIL0000007', 'MED0000002', 3),
+('BIL0000011', 'MED0000001', 2),
+('BIL0000011', 'MED0000002', 4);
 
 -- --------------------------------------------------------
 
@@ -77,12 +89,12 @@ INSERT INTO `bill_detail` (`BillID`, `MedicineID`, `Amout`) VALUES
 --
 CREATE TABLE `bill_view` (
 `BillID` varchar(10)
-,`BillDate` varchar(25)
+,`BillDate` datetime
 ,`CustomerName` varchar(50)
 ,`MedicineName` varchar(50)
-,`MedicineUnitPrice` int(11)
-,`Amout` int(11)
-,`BillTotal` int(100)
+,`MedicineUnitPrice` double
+,`Amout` int(10)
+,`BillTotal` double
 ,`EmployeesName` varchar(50)
 );
 
@@ -112,7 +124,15 @@ INSERT INTO `customer` (`CustomerID`, `CustomerName`, `CustomerAddress`, `Custom
 ('CUS0000005', 'cus e', 'dn', '94535', '1995-09-04'),
 ('CUS0000006', 'cus h234', 'hn', '23424234', '1999-10-26'),
 ('CUS0000007', 'cus a', NULL, '243424', NULL),
-('CUS0000008', 'cus a', NULL, '123', NULL);
+('CUS0000008', 'cus a', NULL, '123', NULL),
+('CUS0000009', 'nv 3', '', '3543535', '2021-04-10'),
+('CUS0000010', 'nv z', '', '3093453', '2021-04-10'),
+('CUS0000011', 'nhvhas', '4fef', '123456', '2021-04-10'),
+('CUS0000012', 'nvnjs', '345345', '12345', '2021-04-10'),
+('CUS0000013', 'fgdgf', '3534', '1231425', '2021-04-10'),
+('CUS0000014', 'cus mnjdfs', '345', '964645', '2021-04-10'),
+('CUS0000015', 'cus a', '345546456', '1234567', '2021-04-10'),
+('CUS0000016', 'đfgdf', '', '234324', '2021-04-10');
 
 -- --------------------------------------------------------
 
@@ -179,7 +199,7 @@ INSERT INTO `manufactor` (`ManufactorID`, `ManufactorName`, `ManufactorAddress`,
 CREATE TABLE `medicine` (
   `MedicineID` varchar(10) NOT NULL,
   `MedicineName` varchar(50) CHARACTER SET utf8 NOT NULL,
-  `MedicineUnitPrice` int(11) NOT NULL,
+  `MedicineUnitPrice` double NOT NULL,
   `MedicineInventory` int(11) DEFAULT NULL,
   `MedicineExpire` date NOT NULL,
   `ManufactorID` varchar(10) NOT NULL
@@ -190,12 +210,13 @@ CREATE TABLE `medicine` (
 --
 
 INSERT INTO `medicine` (`MedicineID`, `MedicineName`, `MedicineUnitPrice`, `MedicineInventory`, `MedicineExpire`, `ManufactorID`) VALUES
-('MED0000001', 'thuoc a', 5600, 1563, '2025-07-08', 'MAN0000003'),
-('MED0000002', 'thuoc b', 34535, 318, '2025-07-18', 'MAN0000002'),
-('MED0000003', 'thuoc c', 345646, 6764, '2025-07-09', 'MAN0000001'),
+('MED0000001', 'thuoc a', 5600, 1558, '2025-07-08', 'MAN0000003'),
+('MED0000002', 'thuoc b', 34535, 243, '2025-07-18', 'MAN0000002'),
+('MED0000003', 'thuoc c', 345646, 6726, '2025-07-09', 'MAN0000001'),
 ('MED0000004', 'thuoc d', 3535, 453, '2025-07-08', 'MAN0000004'),
 ('MED0000006', 'thuoc z', 353, 345, '2027-07-22', 'MAN0000007'),
-('MED0000007', 'thuoc g', 353, 345, '2027-07-22', 'MAN0000007');
+('MED0000007', 'thuoc g', 353, 345, '2027-07-22', 'MAN0000007'),
+('MED0000008', 'thuoc i', 56, 45, '2021-04-08', 'MAN0000001');
 
 -- --------------------------------------------------------
 
