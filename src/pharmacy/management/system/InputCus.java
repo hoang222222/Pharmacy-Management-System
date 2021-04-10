@@ -8,6 +8,8 @@ package pharmacy.management.system;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.Date;
+
 import javax.swing.JOptionPane;
 import static pharmacy.management.system.DBProvider.add;
 import static pharmacy.management.system.DBProvider.check;
@@ -20,18 +22,24 @@ import static pharmacy.management.system.DBProvider.getConnect;
 import static pharmacy.management.system.DBProvider.insertID;
 import static pharmacy.management.system.DBProvider.rs;
 import static pharmacy.management.system.Signin.txtUsername;
+//import static pharmacy.management.system.AddBill.input_cus_phone;
 
 /**
  *
  * @author HOANG
  */
 public class InputCus extends javax.swing.JFrame {
+
+    java.sql.Date date_cus;
     String username = txtUsername.getText();
+
     /**
      * Creates new form InputCusName
      */
     public InputCus() {
         initComponents();
+        jdateCurrentCus();
+        
     }
 
     /**
@@ -51,10 +59,13 @@ public class InputCus extends javax.swing.JFrame {
         txtPhone = new javax.swing.JTextField();
         btnCancel = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtCusAdd = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        cus_birth = new com.toedter.calendar.JDateChooser();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
+        setUndecorated(true);
         setResizable(false);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -79,49 +90,58 @@ public class InputCus extends javax.swing.JFrame {
 
         jLabel3.setText("Address:");
 
+        jLabel4.setText("Birthday:");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
-                    .addComponent(jTextField1)
-                    .addComponent(txtCusname))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(txtPhone)
+                            .addComponent(txtCusAdd)
+                            .addComponent(cus_birth, javax.swing.GroupLayout.DEFAULT_SIZE, 297, Short.MAX_VALUE)
+                            .addComponent(txtCusname)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(132, 132, 132)
+                        .addComponent(btnOk)
+                        .addGap(45, 45, 45)
+                        .addComponent(btnCancel)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(134, Short.MAX_VALUE)
-                .addComponent(btnOk)
-                .addGap(45, 45, 45)
-                .addComponent(btnCancel)
-                .addGap(131, 131, 131))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(8, 8, 8)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtCusname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1))
-                .addGap(18, 18, 18)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
                     .addComponent(txtPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtCusname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(42, 42, 42)
+                    .addComponent(txtCusAdd, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel4)
+                    .addComponent(cus_birth, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnOk)
                     .addComponent(btnCancel))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(26, 26, 26))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -134,48 +154,56 @@ public class InputCus extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
     public static String input_cus_name;
     public static String input_cus_phone;
+    public void jdateCurrentCus() {
+        long millis = System.currentTimeMillis();
+        java.sql.Date date = new java.sql.Date(millis);
+        cus_birth.setDate(date);
+    }
     private void btnOkActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOkActionPerformed
         if (txtCusname.getText().equals("") || txtPhone.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Somthing is empty");
         } else {
             try {
-                // TODO add your handling code here:
                 input_cus_name = txtCusname.getText();
                 input_cus_phone = txtPhone.getText();
+                Date birth = cus_birth.getDate();
+                date_cus = new java.sql.Date(birth.getTime());
                 String sql_check = "select * from customer where CustomerPhone = ?";
                 excuteCheck(sql_check);
-                check.setInt(1, Integer.valueOf(txtPhone.getText()));
+                check.setString(1, txtPhone.getText());
                 rs = check.executeQuery();
                 if (rs.next()) {
                     AddBill ab = new AddBill();
                     ab.setVisible(true);
                     this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Customer is not in Database");
+                    JOptionPane.showMessageDialog(this, "This is a new customer.");
                     String sql = "SELECT CustomerID FROM customer ORDER BY CustomerID DESC LIMIT 1";
                     String colname = "CustomerID";
                     String type = "CUS";
                     String cus_id = insertID(type, sql, colname);
-                    String sql_add = "insert into customer (CustomerID,CustomerName,CustomerPhone) values (?,?,?)";
+                    String sql_add = "insert into customer values (?,?,?,?,?)";
                     excuteAdd(sql_add);
                     add.setString(1, cus_id);
                     add.setString(2, txtCusname.getText());
-                    add.setString(3, txtPhone.getText());
+                    add.setString(3, txtCusAdd.getText());
+                    add.setString(4, txtPhone.getText());
+                    add.setDate(5, date_cus);
                     int row = add.executeUpdate();
                     AddBill ab = new AddBill();
                     ab.setVisible(true);
                     this.dispose();
                 }
+
             } catch (SQLException ex) {
                 Logger.getLogger(InputCus.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -183,8 +211,8 @@ public class InputCus extends javax.swing.JFrame {
     }//GEN-LAST:event_btnOkActionPerformed
 
     private void btnCancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelActionPerformed
-         // TODO add your handling code here:
-         try {
+        // TODO add your handling code here:
+        try {
             // TODO add your handling code here:
             String tmp = "";
             getConnect();
@@ -210,7 +238,7 @@ public class InputCus extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(AddBill.class.getName()).log(Level.SEVERE, null, ex);
         }
-         this.disable();
+        this.disable();
     }//GEN-LAST:event_btnCancelActionPerformed
 
     /**
@@ -236,7 +264,7 @@ public class InputCus extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
-        
+
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
@@ -253,11 +281,13 @@ public class InputCus extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancel;
     private javax.swing.JButton btnOk;
+    private com.toedter.calendar.JDateChooser cus_birth;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField txtCusAdd;
     private javax.swing.JTextField txtCusname;
     private javax.swing.JTextField txtPhone;
     // End of variables declaration//GEN-END:variables

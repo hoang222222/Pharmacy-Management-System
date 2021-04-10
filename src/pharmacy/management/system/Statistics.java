@@ -47,6 +47,8 @@ public class Statistics extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Statistics");
+        setBackground(new java.awt.Color(255, 255, 255));
+        setResizable(false);
 
         jDateChooser1.setDateFormatString("yyyy-MM-dd HH:mm:ss");
 

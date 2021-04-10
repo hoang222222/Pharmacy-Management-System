@@ -5,22 +5,35 @@
  */
 package pharmacy.management.system;
 
+import java.io.InputStream;
 import java.lang.System;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JRDesignQuery;
+import net.sf.jasperreports.engine.design.JasperDesign;
+import net.sf.jasperreports.engine.xml.JRXmlLoader;
+import net.sf.jasperreports.view.JasperViewer;
 
 import static pharmacy.management.system.DBProvider.add;
 import static pharmacy.management.system.DBProvider.check;
 import static pharmacy.management.system.DBProvider.closeConnect;
+import static pharmacy.management.system.DBProvider.conn;
 import static pharmacy.management.system.DBProvider.dataTable;
 import static pharmacy.management.system.DBProvider.excuteAdd;
 import static pharmacy.management.system.DBProvider.excuteCheck;
@@ -30,9 +43,12 @@ import static pharmacy.management.system.DBProvider.excuteUpdate_Delete;
 import static pharmacy.management.system.DBProvider.get;
 import static pharmacy.management.system.DBProvider.getConnect;
 import static pharmacy.management.system.DBProvider.insertID;
+import static pharmacy.management.system.DBProvider.password_db;
 import static pharmacy.management.system.DBProvider.rs;
 import static pharmacy.management.system.DBProvider.rs1;
 import static pharmacy.management.system.DBProvider.rs2;
+import static pharmacy.management.system.DBProvider.url;
+import static pharmacy.management.system.DBProvider.username_db;
 
 /**
  *
@@ -169,6 +185,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         tbBill = new javax.swing.JTable();
         pnlButtonReport = new javax.swing.JPanel();
         btnAddBill = new javax.swing.JButton();
+        btnPrintdBill = new javax.swing.JButton();
         btnDeleteBill = new javax.swing.JButton();
         btnClearBill = new javax.swing.JButton();
         jScrollPane6 = new javax.swing.JScrollPane();
@@ -941,6 +958,14 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonReport.add(btnAddBill);
 
+        btnPrintdBill.setText("Print");
+        btnPrintdBill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrintdBillActionPerformed(evt);
+            }
+        });
+        pnlButtonReport.add(btnPrintdBill);
+
         btnDeleteBill.setText("Delete");
         btnDeleteBill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1101,14 +1126,15 @@ public class StartScreenAdmin extends javax.swing.JFrame {
     }
 
     public void SelectBill(String idbill) {
-        String sql = "select a.BillID, a.BillDate, c.CustomerName , e.MedicineName, e.MedicineUnitPrice, b.Amout, (e.MedicineUnitPrice*b.Amout) as Money, d.EmployeesID from pharmacydb.bill a, pharmacydb.bill_detail  b, pharmacydb.customer c, pharmacydb.employees d, pharmacydb.medicine e where a.CustomerID=c.CustomerID and a.EmployeesID=d.EmployeesID and b.MedicineID=e.MedicineID and a.BillID=b.BillID and a.BillID='"+idbill+"'";
+        String sql = "select a.BillID, a.BillDate, c.CustomerName , e.MedicineName, e.MedicineUnitPrice, b.Amout, (e.MedicineUnitPrice*b.Amout) as Money, d.EmployeesID from pharmacydb.bill a, pharmacydb.bill_detail  b, pharmacydb.customer c, pharmacydb.employees d, pharmacydb.medicine e where a.CustomerID=c.CustomerID and a.EmployeesID=d.EmployeesID and b.MedicineID=e.MedicineID and a.BillID=b.BillID and a.BillID='" + idbill + "'";
         dataTable(sql, tbBill);
     }
-    
+
     public void SelectTbGetBill() {
         String sql = "select * from bill";
         dataTable(sql, tbgetBill);
     }
+
     public void jdateCurrentMedi() {
         long millis = System.currentTimeMillis();
         java.sql.Date date = new java.sql.Date(millis);
@@ -1558,7 +1584,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddBillActionPerformed
 
     private void tbBillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbBillMouseClicked
-        
+
     }//GEN-LAST:event_tbBillMouseClicked
 
     private void txtBillIDKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBillIDKeyPressed
@@ -1688,18 +1714,18 @@ public class StartScreenAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddCusActionPerformed
 
     private void tbgetBillMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbgetBillMouseClicked
-         // TODO add your handling code here:
-         DefaultTableModel model = (DefaultTableModel) tbgetBill.getModel();
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel) tbgetBill.getModel();
         int Myindex = tbgetBill.getSelectedRow();
         String idbill = model.getValueAt(Myindex, 0).toString();
         txtBillID.setText(idbill);
-        String sql = "select a.BillID, a.BillDate, c.CustomerName , e.MedicineName, e.MedicineUnitPrice, b.Amout, (e.MedicineUnitPrice*b.Amout) as Money, d.EmployeesID from pharmacydb.bill a, pharmacydb.bill_detail  b, pharmacydb.customer c, pharmacydb.employees d, pharmacydb.medicine e where a.CustomerID=c.CustomerID and a.EmployeesID=d.EmployeesID and b.MedicineID=e.MedicineID and a.BillID=b.BillID and a.BillID='"+idbill+"'";
+        String sql = "select a.BillID, a.BillDate, c.CustomerName , e.MedicineName, e.MedicineUnitPrice, b.Amout, (e.MedicineUnitPrice*b.Amout) as Money, d.EmployeesID from pharmacydb.bill a, pharmacydb.bill_detail  b, pharmacydb.customer c, pharmacydb.employees d, pharmacydb.medicine e where a.CustomerID=c.CustomerID and a.EmployeesID=d.EmployeesID and b.MedicineID=e.MedicineID and a.BillID=b.BillID and a.BillID='" + idbill + "'";
         dataTable(sql, tbBill);
     }//GEN-LAST:event_tbgetBillMouseClicked
 
     private void txtMedInventoryKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMedInventoryKeyTyped
-         // TODO add your handling code here:
-         char char_input = evt.getKeyChar();
+        // TODO add your handling code here:
+        char char_input = evt.getKeyChar();
         if (!Character.isDigit(char_input) && (char_input != '\b')) {
             JOptionPane.showMessageDialog(this, "Only Positive Numbers Allowed");
             txtCusPhone.requestFocus();
@@ -1707,11 +1733,35 @@ public class StartScreenAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_txtMedInventoryKeyTyped
 
     private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
-         // TODO add your handling code here:
-         Statistics st = new Statistics();
-         st.setVisible(true);
-         //this.dispose();
+        // TODO add your handling code here:
+        Statistics st = new Statistics();
+        st.setVisible(true);
+        //this.dispose();
     }//GEN-LAST:event_jMenu1MouseClicked
+
+    private void btnPrintdBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrintdBillActionPerformed
+        if(txtBillID.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Please choose a bill");
+        } else{
+            try {
+            // TODO add your handling code here:
+            conn = DriverManager.getConnection(url, username_db, password_db);
+            String id_bill = txtBillID.getText();
+            HashMap hash = new HashMap();
+            try {
+                hash.put("BillID", id_bill);
+                JasperDesign jd = JRXmlLoader.load("E:\\PharmacyManagementSystem\\src\\reports\\report_bill.jrxml");
+                JasperReport js = JasperCompileManager.compileReport(jd);
+                JasperPrint jp = JasperFillManager.fillReport(js, hash, conn);
+                JasperViewer.viewReport(jp);
+            } catch (JRException ex) {
+                Logger.getLogger(StartScreenAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StartScreenAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        }
+    }//GEN-LAST:event_btnPrintdBillActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1765,6 +1815,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
     private javax.swing.JButton btnDeleteManu;
     private javax.swing.JButton btnDeleteMed;
     private javax.swing.JMenuItem btnExit;
+    private javax.swing.JButton btnPrintdBill;
     private javax.swing.JMenuItem btnSignOut;
     private javax.swing.JButton btnUpdateCus;
     private javax.swing.JButton btnUpdateEmp;

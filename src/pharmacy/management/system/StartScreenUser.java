@@ -1267,11 +1267,9 @@ public class StartScreenUser extends javax.swing.JFrame {
     }//GEN-LAST:event_tbBillMouseClicked
 
     private void btnAddBillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddBillActionPerformed
-        // TODO add your handling code here:
         InputCus ic = new InputCus();
         ic.setVisible(true);
         this.dispose();
-
     }//GEN-LAST:event_btnAddBillActionPerformed
 
     private void btnUpdateCusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUpdateCusActionPerformed

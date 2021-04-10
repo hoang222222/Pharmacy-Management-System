@@ -4,29 +4,44 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="BillID" class="java.lang.String"/>
-	<field name="BillDate" class="java.lang.String"/>
-	<field name="EmployeesID" class="java.lang.String"/>
+	<queryString>
+		<![CDATA[select a.BillID, a.BillDate, d.MedicineID, d.MedicineName, d.MedicineUnitPrice, b.Amout, (d.MedicineUnitPrice*b.Amout) as `Money`,c.CustomerName, a.BillTotal, a.EmployeesID 
+from bill a, bill_detail b, customer c, medicine d 
+where a.BillID=b.BillID and a.CustomerID=c.CustomerID and b.MedicineID=d.MedicineID and a.BillID=$P{BillID}]]>
+	</queryString>
+	<field name="BillID" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="BillDate" class="java.sql.Timestamp">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MedicineID" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MedicineName" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="MedicineUnitPrice" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Amout" class="java.lang.Integer">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="Money" class="java.lang.Double"/>
 	<field name="CustomerName" class="java.lang.String">
 		<fieldDescription><![CDATA[]]></fieldDescription>
 	</field>
-	<field name="MedicineName" class="java.lang.String"/>
-	<field name="Amout" class="java.lang.String"/>
-	<field name="MedicineID" class="java.lang.String"/>
-	<field name="MedicineUnitPrice" class="java.lang.String"/>
-	<field name="Money" class="java.lang.String"/>
-	<field name="BillTotal" class="java.lang.String"/>
+	<field name="BillTotal" class="java.lang.Double">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="EmployeesID" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
-			<staticText>
-				<reportElement x="0" y="0" width="207" height="79" uuid="806599c8-272c-4dd4-92b8-860d686012b8"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="16" isBold="true" isItalic="true"/>
-				</textElement>
-				<text><![CDATA[PHARMACY STORE]]></text>
-			</staticText>
+		<band height="130" splitType="Stretch">
 			<staticText>
 				<reportElement x="313" y="59" width="242" height="20" uuid="acfcde6c-2b09-4fba-9748-30103edfd556"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -44,6 +59,10 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<text><![CDATA[34 Đường Số 3, KP5]]></text>
 			</staticText>
+			<image>
+				<reportElement x="0" y="-1" width="260" height="129" uuid="b11b16aa-02e4-4b8f-bbb9-8812cbfdba02"/>
+				<imageExpression><![CDATA["E:\\PharmacyManagementSystem\\src\\Image\\pharmacy-logo.jpg"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -141,14 +160,14 @@
 	<columnFooter>
 		<band height="31" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="11" width="207" height="20" uuid="9c0af2a5-cefe-4081-a627-15e33a270582"/>
+				<reportElement x="0" y="0" width="207" height="20" uuid="9c0af2a5-cefe-4081-a627-15e33a270582"/>
 				<textElement verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TỔNG TIỀN PHẢI THANH TOÁN:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="394" y="11" width="161" height="20" uuid="b6782e44-6d81-4a0e-91dd-9f6ffd52eacf"/>
+				<reportElement x="394" y="0" width="161" height="20" uuid="b6782e44-6d81-4a0e-91dd-9f6ffd52eacf"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{BillTotal}]]></textFieldExpression>
 			</textField>
@@ -173,14 +192,6 @@
 		</band>
 	</pageFooter>
 	<summary>
-		<band height="52" splitType="Stretch">
-			<staticText>
-				<reportElement x="175" y="12" width="205" height="20" uuid="98505d5d-4399-4383-bb72-13c9e35dfc78"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Cảm ơn quý khách và hẹn gặp lại]]></text>
-			</staticText>
-		</band>
+		<band height="52" splitType="Stretch"/>
 	</summary>
 </jasperReport>

@@ -41,7 +41,7 @@ import static pharmacy.management.system.DBProvider.insertID;
 import static pharmacy.management.system.DBProvider.rs;
 import static pharmacy.management.system.Signin.txtUsername;
 import static pharmacy.management.system.DBProvider.rs2;
-import static pharmacy.management.system.InputCus.input_cus_phone;
+import static pharmacy.management.system.InputCus.input_cus_name;
 import static pharmacy.management.system.DBProvider.dataTable;
 import static pharmacy.management.system.DBProvider.excuteGet;
 import static pharmacy.management.system.DBProvider.excuteUpdate_Delete;
@@ -51,7 +51,7 @@ import static pharmacy.management.system.DBProvider.password_db;
 import static pharmacy.management.system.DBProvider.rs;
 import static pharmacy.management.system.DBProvider.url;
 import static pharmacy.management.system.DBProvider.username_db;
-import static pharmacy.management.system.InputCus.input_cus_name;
+import static pharmacy.management.system.InputCus.input_cus_phone;
 
 /**
  *
@@ -59,6 +59,7 @@ import static pharmacy.management.system.InputCus.input_cus_name;
  */
 public class AddBill extends javax.swing.JFrame {
 
+    //public static String input_cus_phone;
     String username = txtUsername.getText();
     private long now = System.currentTimeMillis();
     private Timestamp sqlTimestamp = new Timestamp(now);
@@ -127,6 +128,7 @@ public class AddBill extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Adding Bill");
         setBackground(new java.awt.Color(255, 255, 255));
+        setUndecorated(true);
         setResizable(false);
 
         pnlReportInfo.setBackground(new java.awt.Color(255, 255, 255));
@@ -326,6 +328,7 @@ public class AddBill extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
     private String cus_id;
     private String emp_id;
+    //private String bill_id;
 
     public void getCusID() throws SQLException {
         getConnect();
@@ -500,20 +503,19 @@ public class AddBill extends javax.swing.JFrame {
         try {
             // TODO add your handling code here:
             conn = DriverManager.getConnection(url, username_db, password_db);
-            JasperDesign jd = JRXmlLoader.load("E:\\PharmacyManagementSystem\\src\\reports\\report_bill.jrxml");
-            String sql = "select a.BillID, a.BillDate, c.CustomerName , e.MedicineName, e.MedicineUnitPrice, b.Amout, (e.MedicineUnitPrice*b.Amout) as Money, d.EmployeesID from pharmacydb.bill a, pharmacydb.bill_detail  b, pharmacydb.customer c, pharmacydb.employees d, pharmacydb.medicine e where a.BillID=b.BillID and a.CustomerID=c.CustomerID and a.EmployeesID=d.EmployeesID and b.MedicineID=e.MedicineID and a.BillID='" + txtBillID.getText() + "'";
-            JRDesignQuery query = new JRDesignQuery();
-            query.setText(sql);
-            jd.setQuery(query);
-
-            HashMap<String, Object> para = new HashMap<>();
-            para.put("BillID", txtBillID.getText());
-
-            JasperReport js = JasperCompileManager.compileReport(jd);
-            JasperPrint jp = JasperFillManager.fillReport(js, para, conn);
-            JasperViewer.viewReport(jp);
-        } catch (JRException | SQLException ex) {
-            Logger.getLogger(AddBill.class.getName()).log(Level.SEVERE, null, ex);
+            String id_bill = txtBillID.getText();
+            HashMap hash = new HashMap();
+            try {
+                hash.put("BillID", id_bill);
+                JasperDesign jd = JRXmlLoader.load("E:\\PharmacyManagementSystem\\src\\reports\\report_bill.jrxml");
+                JasperReport js = JasperCompileManager.compileReport(jd);
+                JasperPrint jp = JasperFillManager.fillReport(js, hash, conn);
+                JasperViewer.viewReport(jp);
+            } catch (JRException ex) {
+                Logger.getLogger(StartScreenAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StartScreenAdmin.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnPrintBillActionPerformed
 
