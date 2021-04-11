@@ -1067,6 +1067,7 @@ public class StartScreenUser extends javax.swing.JFrame {
         txtMedID.setText("");
         txtMedName.setText("");
         txtMedUnit.setText("");
+        txtMedInventory.setText("");
         jdateCurrentMedi();
         cbxCompany.setSelectedIndex(0);
         SelectMed();
