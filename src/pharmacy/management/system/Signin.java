@@ -11,15 +11,18 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import static pharmacy.management.system.DBProvider.closeConnect;
+import static pharmacy.management.system.DBProvider.excuteGet;
+import static pharmacy.management.system.DBProvider.get;
+import static pharmacy.management.system.DBProvider.getConnect;
+import static pharmacy.management.system.DBProvider.rs;
 
 /**
  *
  * @author HOANG
  */
 public class Signin extends javax.swing.JFrame {
-    String url = "jdbc:mysql://localhost:3306/pharmacydb";
-    String username_db = "root";
-    String password_db = "";
+
     /**
      * Creates new form Login
      */
@@ -208,11 +211,13 @@ public class Signin extends javax.swing.JFrame {
             txtUsername.requestFocus();
         } else {
             try {
-                Connection conn = DriverManager.getConnection(url, username_db, password_db);
-                PreparedStatement ps = conn.prepareStatement("select * from employees where Username=? and Password=?");
-                ps.setString(1, txtUsername.getText());
-                ps.setString(2, txtPassword.getText());
-                ResultSet rs = ps.executeQuery();
+
+                getConnect();
+                String sql ="select * from employees where Username=? and Password=?";
+                excuteGet(sql);
+                get.setString(1, txtUsername.getText());
+                get.setString(2, txtPassword.getText());
+                rs = get.executeQuery();
                 if (rs.next()) {
                     //String name = rs.getString("full_name");
                     
@@ -231,7 +236,7 @@ public class Signin extends javax.swing.JFrame {
                 } else {
                     JOptionPane.showMessageDialog(this, "Username or password is wrong");
                 }
-                conn.close();
+                closeConnect();
             } catch (SQLException ex) {
                 ex.printStackTrace();
             }
