@@ -54,6 +54,7 @@ public class Statistics extends javax.swing.JFrame {
 
         jDateChooser2.setDateFormatString("yyyy-MM-dd HH:mm:ss");
 
+        btnByday.setBackground(new java.awt.Color(0, 153, 102));
         btnByday.setText("Statistics");
         btnByday.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

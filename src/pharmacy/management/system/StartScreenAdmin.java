@@ -217,6 +217,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
 
         jLabel1.setText("Medicine ID:");
 
+        txtMedID.setMaximumSize(new java.awt.Dimension(6, 22));
         txtMedID.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtMedIDKeyTyped(evt);
@@ -225,8 +226,11 @@ public class StartScreenAdmin extends javax.swing.JFrame {
 
         jLabel2.setText("Name:");
 
+        txtMedName.setMaximumSize(new java.awt.Dimension(6, 22));
+
         jLabel3.setText("Unit Price:");
 
+        txtMedUnit.setMaximumSize(new java.awt.Dimension(6, 22));
         txtMedUnit.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtMedUnitKeyTyped(evt);
@@ -236,11 +240,17 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         jLabel7.setText("Exp:");
 
         dateExp.setDateFormatString("yyyy-MM-dd");
+        dateExp.setMaximumSize(new java.awt.Dimension(95, 22));
+        dateExp.setMinSelectableDate(new java.util.Date(-62135791099000L));
+        dateExp.setMinimumSize(new java.awt.Dimension(95, 22));
 
         jLabel8.setText("Company:");
 
+        cbxCompany.setMaximumSize(new java.awt.Dimension(31, 22));
+
         jLabel4.setText("Inventory:");
 
+        txtMedInventory.setMaximumSize(new java.awt.Dimension(6, 22));
         txtMedInventory.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtMedInventoryKeyTyped(evt);
@@ -253,36 +263,32 @@ public class StartScreenAdmin extends javax.swing.JFrame {
             pnlInforMedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlInforMedLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(pnlInforMedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlInforMedLayout.createSequentialGroup()
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(dateExp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(pnlInforMedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(pnlInforMedLayout.createSequentialGroup()
                         .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(cbxCompany, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(pnlInforMedLayout.createSequentialGroup()
-                        .addGroup(pnlInforMedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(pnlInforMedLayout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(txtMedInventory))
-                            .addGroup(pnlInforMedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(pnlInforMedLayout.createSequentialGroup()
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(txtMedUnit, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGroup(pnlInforMedLayout.createSequentialGroup()
-                                    .addGroup(pnlInforMedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addGroup(pnlInforMedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtMedName, javax.swing.GroupLayout.DEFAULT_SIZE, 216, Short.MAX_VALUE)
-                                        .addComponent(txtMedID)))))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(dateExp, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlInforMedLayout.createSequentialGroup()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtMedInventory, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlInforMedLayout.createSequentialGroup()
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtMedUnit, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlInforMedLayout.createSequentialGroup()
+                        .addGroup(pnlInforMedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlInforMedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtMedID, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtMedName, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlInforMedLayout.setVerticalGroup(
             pnlInforMedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -310,7 +316,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(pnlInforMedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(cbxCompany, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cbxCompany, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(40, Short.MAX_VALUE))
         );
 
@@ -334,6 +340,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
 
         pnlButtonMed.setBackground(new java.awt.Color(255, 255, 255));
 
+        btnAddMed.setBackground(new java.awt.Color(0, 153, 102));
         btnAddMed.setText("Add");
         btnAddMed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -342,6 +349,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonMed.add(btnAddMed);
 
+        btnUpdateMed.setBackground(new java.awt.Color(0, 153, 102));
         btnUpdateMed.setText("Update");
         btnUpdateMed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -350,6 +358,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonMed.add(btnUpdateMed);
 
+        btnDeleteMed.setBackground(new java.awt.Color(0, 153, 102));
         btnDeleteMed.setText("Delete");
         btnDeleteMed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -358,6 +367,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonMed.add(btnDeleteMed);
 
+        btnClearMed.setBackground(new java.awt.Color(0, 153, 102));
         btnClearMed.setText("Reset");
         btnClearMed.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -375,11 +385,11 @@ public class StartScreenAdmin extends javax.swing.JFrame {
                 .addGroup(pnlMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(lbMedicine, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlMedicineLayout.createSequentialGroup()
-                        .addGroup(pnlMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pnlButtonMed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pnlInforMed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(pnlMedicineLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pnlInforMed, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnlButtonMed, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         pnlMedicineLayout.setVerticalGroup(
@@ -442,7 +452,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
                     .addGroup(pnlCusInfoLayout.createSequentialGroup()
                         .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(dateCusBirth, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(dateCusBirth, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE))
                     .addGroup(pnlCusInfoLayout.createSequentialGroup()
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -458,9 +468,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlCusInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtCusName)
-                            .addGroup(pnlCusInfoLayout.createSequentialGroup()
-                                .addComponent(txtCusID, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                            .addComponent(txtCusID))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlCusInfoLayout.setVerticalGroup(
@@ -512,6 +520,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
 
         pnlButtonCus.setBackground(new java.awt.Color(255, 255, 255));
 
+        btnAddCus.setBackground(new java.awt.Color(0, 153, 102));
         btnAddCus.setText("Add");
         btnAddCus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -520,6 +529,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonCus.add(btnAddCus);
 
+        btnUpdateCus.setBackground(new java.awt.Color(0, 153, 102));
         btnUpdateCus.setText("Update");
         btnUpdateCus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -528,6 +538,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonCus.add(btnUpdateCus);
 
+        btnDeleteCus.setBackground(new java.awt.Color(0, 153, 102));
         btnDeleteCus.setText("Delete");
         btnDeleteCus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -536,6 +547,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonCus.add(btnDeleteCus);
 
+        btnClearCus.setBackground(new java.awt.Color(0, 153, 102));
         btnClearCus.setText("Reset");
         btnClearCus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -553,11 +565,11 @@ public class StartScreenAdmin extends javax.swing.JFrame {
                 .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlCustomerLayout.createSequentialGroup()
-                        .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(pnlButtonCus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pnlCusInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(pnlCustomerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(pnlCusInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnlButtonCus, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         pnlCustomerLayout.setVerticalGroup(
@@ -614,7 +626,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
                     .addComponent(jLabel20, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlManuInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtManuPhone, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                    .addComponent(txtManuPhone)
                     .addComponent(txtManuAdd)
                     .addComponent(txtManuName)
                     .addComponent(txtManuID))
@@ -662,6 +674,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
 
         pnlButtonManu.setBackground(new java.awt.Color(255, 255, 255));
 
+        btnAddManu.setBackground(new java.awt.Color(0, 153, 102));
         btnAddManu.setText("Add");
         btnAddManu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -670,6 +683,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonManu.add(btnAddManu);
 
+        btnUpdateManu.setBackground(new java.awt.Color(0, 153, 102));
         btnUpdateManu.setText("Update");
         btnUpdateManu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -678,6 +692,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonManu.add(btnUpdateManu);
 
+        btnDeleteManu.setBackground(new java.awt.Color(0, 153, 102));
         btnDeleteManu.setText("Delete");
         btnDeleteManu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -686,6 +701,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonManu.add(btnDeleteManu);
 
+        btnClearManu.setBackground(new java.awt.Color(0, 153, 102));
         btnClearManu.setText("Reset");
         btnClearManu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -704,10 +720,10 @@ public class StartScreenAdmin extends javax.swing.JFrame {
                     .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlManufactorLayout.createSequentialGroup()
                         .addGroup(pnlManufactorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pnlManuInfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(pnlButtonManu, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(pnlManuInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pnlButtonManu, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         pnlManufactorLayout.setVerticalGroup(
@@ -846,6 +862,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
 
         pnlButtonEmp.setBackground(new java.awt.Color(255, 255, 255));
 
+        btnAddEmp.setBackground(new java.awt.Color(0, 153, 102));
         btnAddEmp.setText("Add");
         btnAddEmp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -854,6 +871,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonEmp.add(btnAddEmp);
 
+        btnUpdateEmp.setBackground(new java.awt.Color(0, 153, 102));
         btnUpdateEmp.setText("Update");
         btnUpdateEmp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -862,6 +880,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonEmp.add(btnUpdateEmp);
 
+        btnDeleteEmp.setBackground(new java.awt.Color(0, 153, 102));
         btnDeleteEmp.setText("Delete");
         btnDeleteEmp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -870,6 +889,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonEmp.add(btnDeleteEmp);
 
+        btnClearEmp.setBackground(new java.awt.Color(0, 153, 102));
         btnClearEmp.setText("Reset");
         btnClearEmp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -887,11 +907,11 @@ public class StartScreenAdmin extends javax.swing.JFrame {
                 .addGroup(pnlEmployeesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlEmployeesLayout.createSequentialGroup()
-                        .addGroup(pnlEmployeesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(pnlEmployeesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(pnlEmpInfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(pnlButtonEmp, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE))
+                            .addComponent(pnlButtonEmp, javax.swing.GroupLayout.DEFAULT_SIZE, 577, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.DEFAULT_SIZE, 612, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 636, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         pnlEmployeesLayout.setVerticalGroup(
@@ -950,6 +970,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
 
         pnlButtonReport.setBackground(new java.awt.Color(255, 255, 255));
 
+        btnAddBill.setBackground(new java.awt.Color(0, 153, 102));
         btnAddBill.setText("Add");
         btnAddBill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -958,6 +979,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonReport.add(btnAddBill);
 
+        btnPrintdBill.setBackground(new java.awt.Color(0, 153, 102));
         btnPrintdBill.setText("Print");
         btnPrintdBill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -966,6 +988,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonReport.add(btnPrintdBill);
 
+        btnDeleteBill.setBackground(new java.awt.Color(0, 153, 102));
         btnDeleteBill.setText("Delete");
         btnDeleteBill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -974,6 +997,7 @@ public class StartScreenAdmin extends javax.swing.JFrame {
         });
         pnlButtonReport.add(btnDeleteBill);
 
+        btnClearBill.setBackground(new java.awt.Color(0, 153, 102));
         btnClearBill.setText("Reset");
         btnClearBill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1011,14 +1035,14 @@ public class StartScreenAdmin extends javax.swing.JFrame {
                     .addGroup(pnlBillLayout.createSequentialGroup()
                         .addGap(41, 41, 41)
                         .addGroup(pnlBillLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(pnlButtonReport, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(pnlBillLayout.createSequentialGroup()
                                 .addComponent(jLabel31, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(txtBillID, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING))
+                                .addComponent(txtBillID, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(pnlButtonReport, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 629, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1231, Short.MAX_VALUE))
                 .addContainerGap())
         );
         pnlBillLayout.setVerticalGroup(

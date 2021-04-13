@@ -7,23 +7,16 @@ package pharmacy.management.system;
 
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import net.proteanit.sql.DbUtils;
 import java.sql.Timestamp;
 import net.sf.jasperreports.engine.JRException;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JRDesignQuery;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import net.sf.jasperreports.view.JasperViewer;
@@ -33,15 +26,9 @@ import static pharmacy.management.system.DBProvider.closeConnect;
 import static pharmacy.management.system.DBProvider.conn;
 import static pharmacy.management.system.DBProvider.excuteAdd;
 import static pharmacy.management.system.DBProvider.excuteCheck;
-import static pharmacy.management.system.DBProvider.excuteGet;
-import static pharmacy.management.system.DBProvider.excuteSQL;
-import static pharmacy.management.system.DBProvider.get;
-import static pharmacy.management.system.DBProvider.getConnect;
 import static pharmacy.management.system.DBProvider.insertID;
-import static pharmacy.management.system.DBProvider.rs;
 import static pharmacy.management.system.Signin.txtUsername;
 import static pharmacy.management.system.DBProvider.rs2;
-import static pharmacy.management.system.InputCus.input_cus_name;
 import static pharmacy.management.system.DBProvider.dataTable;
 import static pharmacy.management.system.DBProvider.excuteGet;
 import static pharmacy.management.system.DBProvider.excuteUpdate_Delete;
@@ -132,12 +119,19 @@ public class AddBill extends javax.swing.JFrame {
         setResizable(false);
 
         pnlReportInfo.setBackground(new java.awt.Color(255, 255, 255));
+        pnlReportInfo.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 153, 102)));
 
         jLabel31.setText("Bill ID:");
 
         jLabel32.setText("Date:");
 
         jLabel33.setText("Empployee ID:");
+
+        txtEmID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmIDActionPerformed(evt);
+            }
+        });
 
         jLabel34.setText("Customer Phone:");
 
@@ -238,10 +232,10 @@ public class AddBill extends javax.swing.JFrame {
                         .addContainerGap()
                         .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlReportInfoLayout.createSequentialGroup()
-                                .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, 83, Short.MAX_VALUE)
-                                    .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGap(43, 43, 43)
+                                .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel32, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel31, javax.swing.GroupLayout.DEFAULT_SIZE, 99, Short.MAX_VALUE))
+                                .addGap(27, 27, 27)
                                 .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(txtBillID)
                                     .addComponent(dateBill, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)))
@@ -285,7 +279,7 @@ public class AddBill extends javax.swing.JFrame {
                         .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel33)
                             .addComponent(txtEmID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(24, 24, 24)
                         .addGroup(pnlReportInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel34)
                             .addComponent(txtCuPhone, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -448,7 +442,12 @@ public class AddBill extends javax.swing.JFrame {
                 getConnect();
                 String sql_add = "insert into bill_detail values (?,?,?)";
                 excuteAdd(sql_add);
-                add.setString(1, txtBillID.getText());
+                String sql_check="select MedicineID from medicine where MedicineID=?";
+                excuteCheck(sql_check);
+                check.setString(1, txtMedID.getText());
+                rs = check.executeQuery();
+                if(rs.next()){
+                    add.setString(1, txtBillID.getText());
                 add.setString(2, txtMedID.getText());
                 add.setString(3, txtAmount.getText());
                 int row = add.executeUpdate();
@@ -456,6 +455,10 @@ public class AddBill extends javax.swing.JFrame {
                 updateTotalBill();
                 JOptionPane.showMessageDialog(this, "Add medicine success");
                 SelectBill();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Medicine ID does not exists");
+                    txtMedID.requestFocus();
+                }              
             } catch (SQLException ex) {
                 Logger.getLogger(AddBill.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -531,6 +534,10 @@ public class AddBill extends javax.swing.JFrame {
     private void txtMedNameKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMedNameKeyReleased
 
     }//GEN-LAST:event_txtMedNameKeyReleased
+
+    private void txtEmIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmIDActionPerformed
 
     /**
      * @param args the command line arguments
